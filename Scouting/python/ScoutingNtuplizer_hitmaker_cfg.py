@@ -114,4 +114,4 @@ process.hitMaker = cms.EDProducer("HitMaker",
 process.scoutingntuplizer.output_file_name = cms.string(options.outputFile)
 
 
-process.p = cms.Path(process.l1DigiSeq*process.offlineBeamSpot*process.scoutingntuplizer*process.hitMaker)
+process.p = cms.Path(process.l1DigiSeq*process.offlineBeamSpot*process.scoutingntuplizer*process.MeasurementTrackerEvent*process.hitMaker)
