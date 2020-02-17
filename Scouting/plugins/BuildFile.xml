@@ -1,0 +1,54 @@
+<library file="*.cc" name="ScoutingTreeProducerPlugins">
+
+  <use name="FWCore/Framework"/>
+  <use name="FWCore/PluginManager"/>
+  <use name="FWCore/ParameterSet"/>
+  <use name="PhysicsTools/UtilAlgos"/>
+  <use name="JetMETCorrections/Algorithms"/>
+  <use name="CondFormats/DataRecord"/>
+  <use name="HLTrigger/HLTcore"/>
+  <use name="root"/>
+  <use name="rootrflx"/>
+  <use name="rootcore"/>
+
+  <use name="DataFormats/Candidate"/>
+  <use name="DataFormats/Common"/>
+  <use name="DataFormats/HLTReco"/>
+  <use name="DataFormats/JetReco"/>
+  <use name="DataFormats/PatCandidates"/>
+  <use name="DataFormats/Scouting"/>
+  <use name="DataFormats/VertexReco"/>
+  <use name="DataFormats/BeamSpot"/>
+  <use name="FWCore/MessageLogger"/>
+  <use name="FWCore/ServiceRegistry"/>
+  <use name="L1Trigger/L1TGlobal"/>
+  <use name="RecoJets/JetAlgorithms"/>
+
+  <use name="CalibFormats/SiStripObjects"/>
+  <use name="CalibTracker/Records"/>
+  <use name="CondFormats/SiPixelObjects"/>
+  <use name="DataFormats/GeometrySurface"/>
+  <use name="DataFormats/SiPixelCluster"/>
+  <use name="DataFormats/TrackerRecHit2D"/>
+  <use name="DataFormats/GsfTrackReco"/>
+  <use name="Geometry/CommonDetUnit"/>
+  <use name="Geometry/Records"/>
+  <use name="Geometry/TrackerGeometryBuilder"/>
+  <use name="RecoLocalTracker/Records"/>
+  <use name="RecoLocalTracker/SiPixelRecHits"/>
+  <use name="RecoLocalTracker/SiStripRecHitConverter"/>
+  <use name="RecoTracker/Record"/>
+  <use name="RecoTracker/MeasurementDet"/>
+  <use name="RecoTracker/TkDetLayers"/>
+  <use name="RecoTracker/TransientTrackingRecHit"/>
+  <use name="TrackingTools/GeomPropagators"/>
+  <use name="TrackingTools/TrajectoryState"/>
+  <use name="TrackingTools/TransientTrackingRecHit"/>
+  <use name="TrackingTools/TransientTrack"/>
+  <use name="TrackingTools/KalmanUpdators"/>
+
+
+
+<flags EDM_PLUGIN="1"/>
+
+</library>
