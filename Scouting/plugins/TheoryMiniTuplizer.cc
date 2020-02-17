@@ -1,4 +1,4 @@
-#include "MuonAnalysis/Scouting/interface/TheoryMiniTuplizer.h"
+#include "MuonAnalysis/Scouting/plugins/TheoryMiniTuplizer.h"
 using namespace std;
 using namespace edm;
 

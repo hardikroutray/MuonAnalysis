@@ -1,4 +1,4 @@
-#include "MuonAnalysis/Scouting/interface/HitMaker.h" 
+#include "MuonAnalysis/Scouting/plugins/HitMaker.h" 
 #include "TMath.h"
 
 using namespace edm;

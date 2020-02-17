@@ -1,4 +1,4 @@
-#include "MuonAnalysis/Scouting/interface/ScoutingNtuplizer.h"
+#include "MuonAnalysis/Scouting/plugins/ScoutingNtuplizer.h"
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
 //#include "PrescaleProvider.h"
 using namespace std;
