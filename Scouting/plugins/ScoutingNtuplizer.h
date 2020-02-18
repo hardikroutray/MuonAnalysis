@@ -89,7 +89,6 @@
 
 // Beam Spot includes
 
-
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
 #include "TMath.h"
 
@@ -252,14 +251,12 @@ class ScoutingNtuplizer : public edm::EDAnalyzer {
       TTree *tree;
       
       int min_muons;
-    // TODO trigger information
+
+      //  trigger information
 
       HLTPrescaleProvider hltPSProv_;
       std::string hltProcess_; //name of HLT process, usually "HLT"
 
-
-      //      edm::EDGetTokenT<edm::TriggerResults> token_trgResults;
-      //      edm::Handle<edm::TriggerResults> trgResults;
       edm::EDGetTokenT<edm::TriggerResults> triggerBits_;
       edm::Handle<edm::TriggerResults> triggerBits;
 
@@ -268,7 +265,6 @@ class ScoutingNtuplizer : public edm::EDAnalyzer {
       //      std::vector<pair<string,int>> hltprescalemap;
 
       std::vector<std::string> l1seedsvector;
-      //      std::map<std::string, int> l1map;
       std::vector<pair<string,int>> l1bitmap;
       std::vector<pair<string,int>> l1prescalemap;
 
@@ -280,5 +276,10 @@ class ScoutingNtuplizer : public edm::EDAnalyzer {
       float BS_x;
       float BS_y;
       float BS_z;
+
+      edm::EDGetTokenT<std::vector<int>> token_muonexpectedhits;
+      edm::Handle<std::vector<int> > handle_muonexpectedhits;
+
+      std::vector<int> muon_nexpectedhitsmultiple;
 
 };

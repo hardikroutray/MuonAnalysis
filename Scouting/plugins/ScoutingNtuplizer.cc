@@ -25,7 +25,8 @@ ScoutingNtuplizer::ScoutingNtuplizer(const edm::ParameterSet& iConfig):
     triggerBits_(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),
     hltseedsvector(iConfig.getParameter<std::vector<std::string>>("hltseeds")),
     l1seedsvector(iConfig.getParameter<std::vector<std::string>>("l1seeds")),
-    beamSpotToken(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("bsCollection")))
+    beamSpotToken(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("bsCollection"))),
+    token_muonexpectedhits(consumes<std::vector<int>>(edm::InputTag("hitMaker", "nexpectedhitsmultiple")))    
   
 {
    //now do what ever initialization is needed
@@ -83,6 +84,7 @@ ScoutingNtuplizer::ScoutingNtuplizer(const edm::ParameterSet& iConfig):
    tree->Branch("nvalidpixelhits", &muon_npixelhits);
    tree->Branch("nvalidstriphits", &muon_nstriphits);
    tree->Branch("vertex_index", &muon_vtxindex);
+   tree->Branch("nexpectedhitsmultiple", &muon_nexpectedhitsmultiple);
    
    
    tree->Branch("dispvertex_num", &dispvertex_num, "dispvertex_num/I");
@@ -105,7 +107,6 @@ ScoutingNtuplizer::ScoutingNtuplizer(const edm::ParameterSet& iConfig):
    tree->Branch("privertex_ey", &privtx_ey);
    tree->Branch("privertex_ez", &privtx_ez);
 
-
    tree->Branch("MET_pt",  &MET_pt);
    tree->Branch("MET_phi", &MET_phi);
 
@@ -115,8 +116,6 @@ ScoutingNtuplizer::ScoutingNtuplizer(const edm::ParameterSet& iConfig):
    tree->Branch("l1bitmap", &l1bitmap);
    tree->Branch("l1prescalemap", &l1prescalemap);
 
-   //   tree->Branch("triggerPass", &triggerfilter);
-   //   tree->Branch("prescaleL1", &prescaleL1);
 
 }
 
@@ -158,36 +157,7 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
     if (muons->size() < (unsigned int)min_muons)
       return;
     
-    	ResetVariables();
-
-    // int HLTpass = 0;
-
-
-
-    /*
-    const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
-    //std::cout << "\n == TRIGGER PATHS= " << std::endl;
-    for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
-      //std::cout << "Trigger " << names.triggerName(i) <<                                                                         
-      // ", prescale " << triggerPrescales->getPrescaleForIndex(i) <<                                                               	  //": " << (triggerBits->accept(i) ? "PASS" : "fail (or not run)")                                                             
-      if (triggerBits->accept(i)){
-	//std::cout << "HLT Triggers passed" << names.triggerName(i) << std::endl;
-      
-      //string HLTstring = (names.triggerName(i)).substr(0, 34);
-	if( (names.triggerName(i).find("DST_DoubleMu3_noVtx_CaloScouting_v") != std::string::npos)){
-	  HLTpass = 1;
-	}
-      }
-    }
- 
-    
-    //std::cout<<"HLTpass"<<HLTpass<<std::endl;
-
-    if (HLTpass != 1)
-      return;      
-    
-    //std::cout<<"HLTpass"<<HLTpass<<std::endl;
-    */
+    ResetVariables();
 
 	
     rho = *handle_rho;
@@ -324,76 +294,42 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
 		privtx_ex.push_back(pv.xError());
 		privtx_ey.push_back(pv.yError());
 		privtx_ez.push_back(pv.zError());
-
     }
 
+    iEvent.getByToken(token_muonexpectedhits, handle_muonexpectedhits);
 
-    /*
-    std::vector<int> triggerEval = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-    std::vector<string> triggers{"L1_DoubleMu_12_5",
-        "L1_DoubleMu_12_8",
-        "L1_DoubleMu_13_6",
-        "L1_DoubleMu_15_5",
-        "L1_DoubleMu_15_7",
-        "L1_DoubleMu18er2p1",
-        "L1_DoubleMu22er2p1",
-        "L1_TripleMu_4_4_4",
-        "L1_TripleMu_5_0_0",
-        "L1_TripleMu_5_3_3",
-        "L1_TripleMu_5_5_3",
-        "L1_QuadMu0",
-        "L1_DoubleMu0er1p5_SQ_OS_dR_Max1p4",
-        "L1_DoubleMu4p5er2p0_SQ_OS_Mass7to18",
-        "L1_DoubleMu4_SQ_OS_dR_Max1p2",
-        "L1_DoubleMu5_SQ_OS_Mass7to18",
-        "L1_DoubleMu_20_2_SQ_Mass_Max20",
-        "L1_DoubleMu0er1p4_SQ_OS_dR_Max1p4",
-        "L1_DoubleMu4p5_SQ_OS_dR_Max1p2",
-        "L1_DoubleMu6_SQ_OS",
-	"L1_DoubleMu0er1p5_SQ_dR_Max1p4",
-	"L1_DoubleMu0er2_SQ_dR_Max1p4",
-	"L1_DoubleMu0_SQ"};
-
-    std::vector<int> prescaler = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-    */
+    const std::vector<int> *muonexpectedhits = handle_muonexpectedhits.product();
+    std::cout << "expected hits for muons: ";
+    for (auto nhits : *muonexpectedhits) {
+      muon_nexpectedhitsmultiple.push_back(nhits);
+      std::cout << nhits << " ";
+    }
+    std::cout << std::endl;
 
 
-    //    for (size_t i = 0; i < l1seedsvector.size(); i++) {
-    //      l1map.push_back(std::make_pair(l1seedsvector[i],-1));
-    //    }
-
-
-
-
-
-
-      ///////////////////////////////////////////////////////
-
-  //I seem to recall this function being slow so perhaps cache for a given lumi                                                     
-  //(it only changes on lumi boundaries)                                                                                            
+    //I seem to recall this function being slow so perhaps cache for a given lumi                                                   
+    //(it only changes on lumi boundaries)                                                                                          
     int psColumn = hltPSProv_.prescaleSet(iEvent,iSetup);
     //  std::cout <<"PS column "<<psColumn<<std::endl;
-  if(psColumn==0 && iEvent.isRealData()){
-    std::cout <<"PS column zero detected for data, this is unlikely (almost all triggers are disabled in normal menus here) and its more likely that you've not loaded the correct global tag in "<<std::endl;
-  }
+    if(psColumn==0 && iEvent.isRealData()){
+      std::cout <<"PS column zero detected for data, this is unlikely (almost all triggers are disabled in normal menus here) and its more likely that you've not loaded the correct global tag in "<<std::endl;
+    }
 
-  //note to the reader, what I'm doing is extremely dangerious (a const cast), never do this!                                       
-  //however in this narrow case, it fixes a bug in l1t::L1TGlobalUtil (the method should be const)                                  
-  //and it is safe for this specific instance                                                                                       
-  //l1t::L1TGlobalUtil& l1GtUtils = const<l1t::L1TGlobalUtil&> (hltPSProv_.l1tGlobalUtil());                                        
+    //note to the reader, what I'm doing is extremely dangerious (a const cast), never do this!                                     
+    //however in this narrow case, it fixes a bug in l1t::L1TGlobalUtil (the method should be const)                                
+    //and it is safe for this specific instance                                                                                     
+    //l1t::L1TGlobalUtil& l1GtUtils = const<l1t::L1TGlobalUtil&> (hltPSProv_.l1tGlobalUtil());                                      
 
-  l1t::L1TGlobalUtil& l1GtUtils = const_cast<l1t::L1TGlobalUtil&> (hltPSProv_.l1tGlobalUtil());
-  //l1t::L1TGlobalUtil& l1GtUtils->retrieveL1(iEvent, iSetup, l1AlgoToken);                                                        
-  //  std::cout <<"l1 menu: name decisions prescale "<<std::endl;
-  for(size_t bitNr=0;bitNr<l1GtUtils.decisionsFinal().size();bitNr++){
-
+    l1t::L1TGlobalUtil& l1GtUtils = const_cast<l1t::L1TGlobalUtil&> (hltPSProv_.l1tGlobalUtil());
+    //l1t::L1TGlobalUtil& l1GtUtils->retrieveL1(iEvent, iSetup, l1AlgoToken);                                                       
+    //  std::cout <<"l1 menu: name decisions prescale "<<std::endl;
+    for(size_t bitNr=0;bitNr<l1GtUtils.decisionsFinal().size();bitNr++){
     const std::string& bitName = l1GtUtils.decisionsFinal()[bitNr].first; 
-// l1GtUtils.decisionsFinal() is of type std::vector<std::pair<std::string,bool> >
+    // l1GtUtils.decisionsFinal() is of type std::vector<std::pair<std::string,bool> >
                                                           
-//    bool passInitial = l1GtUtils.decisionsInitial()[bitNr].second; //before masks and prescales, so if we have a 15 GeV electron passing L1_SingleEG10, it will show up as true but will likely not cause a L1 acccept due to the seeds high prescale                   
-//    bool passInterm = l1GtUtils.decisionsInterm()[bitNr].second; //after mask (?, unsure what this is)                              
+    //    bool passInitial = l1GtUtils.decisionsInitial()[bitNr].second; //before masks and prescales, so if we have a 15 GeV electron passing L1_SingleEG10, it will show up as true but will likely not cause a L1 acccept due to the seeds high prescale            
+      
+    //    bool passInterm = l1GtUtils.decisionsInterm()[bitNr].second; //after mask (?, unsure what this is)                              
     bool passFinal = l1GtUtils.decisionsFinal()[bitNr].second; //after masks & prescales, true means it gives a L1 accept to the HLT
     int prescale = l1GtUtils.prescales()[bitNr].second;    
 
@@ -401,7 +337,6 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
     //    std::cout <<"   "<<bitNr<<" "<<bitName<<" "<<passInitial<<" "<<passInterm<<" "<<passFinal<<" "<<prescale<<std::endl;       
     //    }
     for(size_t i = 0; i < l1seedsvector.size(); i++){
-      //TPRegexp pattern(l1seedsvector[i]);
       std::string l1Name = l1seedsvector[i];
       std::string pathName = bitName;
       if(bitName.compare(l1Name) == 0){
@@ -410,31 +345,6 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
       }
     }
     
-
-
-
- 
-    /*
-    
-    for(int i=0; (unsigned int)i<triggerEval.size();i++){
-      string trig = triggers[i];
-      if(trig.compare(bitName) == 0){
-	//	std::cout << prescale;
-	//	prescaler[i] = prescale;
-	//	std::cout << prescaler[i];
-	if(passFinal != 0){
-	  triggerEval[i] = 1;
-	}
-	triggerfilter.push_back(triggerEval[i]);
-	std::cout << triggerEval[i];
-	std::cout <<"   "<<bitNr<<" "<<bitName<<" "<<passInitial<<" "<<passInterm<<" "<<passFinal<<" "<<prescale<<std::endl;
-      }
-      //      prescaleL1.push_back(prescaler[i]);
-    }
-
-    */
-
-
 
 
   }
@@ -455,7 +365,6 @@ std::vector<int> Detach(int len,std::vector<int> vertex){
     return vertex;
   }
 }
-
 
 
 // ------------ method called once each job just before starting event loop  ------------
@@ -531,8 +440,17 @@ int ScoutingNtuplizer::GetCollections(const edm::Event& iEvent) {
 	<< "Could not find PrimaryScoutingVertexCollection." << endl;
       return 1;
     }
+
+    //Get Expected Hits
+
+    iEvent.getByToken(token_muonexpectedhits, handle_muonexpectedhits);
+    if (!handle_muonexpectedhits.isValid()) {
+      throw edm::Exception(edm::errors::ProductNotFound)
+	<< "Could not find Muon expected hits values." << endl;
+      return 1;
+    }
 	
-	return 0;
+    return 0;
 }
 
 void ScoutingNtuplizer::ResetVariables() {
@@ -588,7 +506,7 @@ void ScoutingNtuplizer::ResetVariables() {
     muon_npixelhits.clear();
     muon_nstriphits.clear();
     muon_vtxindex.clear();
-
+    muon_nexpectedhitsmultiple.clear();
 
     
     // Reset MET

@@ -11,10 +11,8 @@ namespace {
       std::vector<std::vector<bool> > vb2d;
       edm::Wrapper<std::vector<std::vector<bool> > > wvb2d;
 
-      std::vector<std::vector<int> > vi2d;
-      edm::Wrapper<std::vector<std::vector<int> > > wvi2d;
-
-      
+      // std::vector<std::vector<int> > vi2d;
+      // edm::Wrapper<std::vector<std::vector<int> > > wvi2d;
       
    };
 }
