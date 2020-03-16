@@ -4,6 +4,8 @@
 *.h~
 *.sh~
 *.jcl~
+*.log
+output.txt
 Scouting/python/con_logs/*
 Scouting/condor/con_logs/*
 Scouting/crab/jobs_2mu_10percent
