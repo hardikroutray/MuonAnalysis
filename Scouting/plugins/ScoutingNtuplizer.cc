@@ -10,23 +10,28 @@ using namespace edm;
 // constructors and destructor //
 //*****************************//
 ScoutingNtuplizer::ScoutingNtuplizer(const edm::ParameterSet& iConfig):
-    token_jets(consumes<ScoutingCaloJetCollection>(iConfig.getParameter<InputTag>("jet_collection"))),
-    token_muons(consumes<ScoutingMuonCollection>(iConfig.getParameter<InputTag>("muon_collection"))),
-    //    token_trgResults(consumes<edm::TriggerResults>(iConfig.getParameter<InputTag>("triggerResults"))),
-    token_rho(consumes<double>(iConfig.getParameter<InputTag>("rho"))),
-    token_MET_pt(consumes<double>(iConfig.getParameter<InputTag>("MET_pt"))),
-    token_MET_phi(consumes<double>(iConfig.getParameter<InputTag>("MET_phi"))),
-    token_dispvertices(consumes<ScoutingVertexCollection>(iConfig.getParameter<InputTag>("displaced_vertex_collection"))),
-    token_privertices(consumes<ScoutingVertexCollection>(iConfig.getParameter<InputTag>("primary_vertex_collection"))),
-    file_name(iConfig.getParameter<string>("output_file_name")),
-    min_muons(iConfig.getParameter<int>("mu_min")),
-    hltPSProv_(iConfig,consumesCollector(),*this), //it needs a referernce to the calling module for some reason, hence the *this   
-    hltProcess_(iConfig.getParameter<std::string>("hltProcess")),
-    triggerBits_(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),
-    hltseedsvector(iConfig.getParameter<std::vector<std::string>>("hltseeds")),
-    l1seedsvector(iConfig.getParameter<std::vector<std::string>>("l1seeds")),
-    beamSpotToken(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("bsCollection"))),
-    token_muonexpectedhits(consumes<std::vector<int>>(edm::InputTag("hitMaker", "nexpectedhitsmultiple")))    
+  token_jets(consumes<ScoutingCaloJetCollection>(iConfig.getParameter<InputTag>("jet_collection"))),
+  token_muons(consumes<ScoutingMuonCollection>(iConfig.getParameter<InputTag>("muon_collection"))),
+  //    token_trgResults(consumes<edm::TriggerResults>(iConfig.getParameter<InputTag>("triggerResults"))),
+  token_rho(consumes<double>(iConfig.getParameter<InputTag>("rho"))),
+  token_MET_pt(consumes<double>(iConfig.getParameter<InputTag>("MET_pt"))),
+  token_MET_phi(consumes<double>(iConfig.getParameter<InputTag>("MET_phi"))),
+  token_dispvertices(consumes<ScoutingVertexCollection>(iConfig.getParameter<InputTag>("displaced_vertex_collection"))),
+  token_privertices(consumes<ScoutingVertexCollection>(iConfig.getParameter<InputTag>("primary_vertex_collection"))),
+  file_name(iConfig.getParameter<string>("output_file_name")),
+  min_muons(iConfig.getParameter<int>("mu_min")),
+  hltPSProv_(iConfig,consumesCollector(),*this), //it needs a referernce to the calling module for some reason, hence the *this   
+  hltProcess_(iConfig.getParameter<std::string>("hltProcess")),
+  triggerBits_(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),
+  hltseedsvector(iConfig.getParameter<std::vector<std::string>>("hltseeds")),
+  l1seedsvector(iConfig.getParameter<std::vector<std::string>>("l1seeds")),
+  beamSpotToken(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("bsCollection"))),
+  token_muonexpectedhits(consumes<std::vector<int>>(edm::InputTag("hitMaker", "nexpectedhitsmultiple"))),
+  is2017data(iConfig.existsAs<bool>("is2017data")?iConfig.getParameter<bool>("is2017data"):false),
+  is2018data(iConfig.existsAs<bool>("is2018data")?iConfig.getParameter<bool>("is2018data"):false),
+  is2017MC(iConfig.existsAs<bool>("is2017MC")?iConfig.getParameter<bool>("is2017MC"):false),
+  is2018MC(iConfig.existsAs<bool>("is2018MC")?iConfig.getParameter<bool>("is2018MC"):false)
+
   
 {
    //now do what ever initialization is needed
@@ -83,10 +88,16 @@ ScoutingNtuplizer::ScoutingNtuplizer(const edm::ParameterSet& iConfig):
    tree->Branch("nvalidmuonhits", &muon_nmuonhits);
    tree->Branch("nvalidpixelhits", &muon_npixelhits);
    tree->Branch("nvalidstriphits", &muon_nstriphits);
+   tree->Branch("muon_trkpt", &muon_trkpt);
+   tree->Branch("muon_trketa", &muon_trketa);
+   tree->Branch("muon_trkphi", &muon_trkphi);
+   tree->Branch("muon_trklambda", &muon_trklambda);
+   tree->Branch("muon_trkdsz", &muon_trkdsz);
+   tree->Branch("muon_trkqoverp", &muon_trkqoverp);
    tree->Branch("vertex_index", &muon_vtxindex);
    tree->Branch("nexpectedhitsmultiple", &muon_nexpectedhitsmultiple);
-   
-   
+
+      
    tree->Branch("dispvertex_num", &dispvertex_num, "dispvertex_num/I");
    tree->Branch("dispvertex_tracksize", &dispvtx_tracksize);
    tree->Branch("dispvertex_chi2", &dispvtx_chisquared);
@@ -151,8 +162,11 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
 
    using namespace edm;
    int getCollectionsResult = GetCollections(iEvent);
-    if (getCollectionsResult)
-	return;
+    // if (getCollectionsResult)
+    // 	return;
+    if (getCollectionsResult == 1)
+      return;
+
     
     if (muons->size() < (unsigned int)min_muons)
       return;
@@ -165,7 +179,10 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
     lumi = iEvent.id().luminosityBlock();
     event = iEvent.id().event();
 
+    // std::cout<<"    Event Number   "<<event<<std::endl;
     //    PrescaleProvider psProv("../hltJsons/triggerData2017");
+
+    // int HLTpass = 0;
 
     iEvent.getByToken(triggerBits_, triggerBits);
 
@@ -186,11 +203,12 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
 
       if (triggerBits->accept(i)){
 	std::cout << "HLT Triggers passed" << names.triggerName(i) << std::endl;
+	// if( (names.triggerName(i).find("DST_DoubleMu3_noVtx_CaloScouting_v") != std::string::npos) || (names.triggerName(i).find("DST_DoubleMu1_noVtx_CaloScouting_v") != std::string::npos)){                                                                          
+        //   HLTpass = 1;
+	// }
       }
 
     }
-
-
 
 
     //Beamspot
@@ -199,7 +217,7 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
     BS_x = beamSpotH->position().x();
     BS_y = beamSpotH->position().y();
     BS_z = beamSpotH->position().z();
- 
+     
     
     //Jets
 
@@ -231,7 +249,6 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
     int length = 0;
     std::vector<int> Detach(int len,std::vector<int> vertex);
 
-
     //Muons
     for (auto &m: *muons) {
 	   muon_q.push_back(m.charge());
@@ -252,16 +269,30 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
 	   muon_nmuonhits.push_back(m.nValidMuonHits());
 	   muon_npixelhits.push_back(m.nValidPixelHits());
 	   muon_nstriphits.push_back(m.nValidStripHits());
-	   //muon_vtxindex.push_back(m.vtxIndx());
-	   if (muon_num == 0){
-	     muon_vtxindex.push_back(m.vtxIndx());
-	     length = 0;
-           }else{
-	     muon_vtxindex.push_back(Detach(length, m.vtxIndx()));
+	   muon_trkpt.push_back(m.trk_pt());
+	   muon_trketa.push_back(m.trk_eta());
+	   muon_trkphi.push_back(m.trk_phi());
+	   muon_trklambda.push_back(m.trk_lambda());
+	   muon_trkdsz.push_back(m.trk_dsz());
+	   muon_trkqoverp.push_back(m.trk_qoverp());
 
-           }length = (m.vtxIndx().size());
-	   muon_num += 1;
-	}
+	   // std::cout<<"2017data?"<<is2017data<<"2018data?"<<is2018data<<std::endl;
+
+	   if(is2017data and run < 305405){
+
+	     if (muon_num == 0){
+	       muon_vtxindex.push_back(m.vtxIndx());
+	       length = 0;
+	     }else{
+	       muon_vtxindex.push_back(Detach(length, m.vtxIndx()));
+	     }
+	     length = (m.vtxIndx().size());
+	     muon_num += 1;
+	   }
+	   else{
+	     muon_vtxindex.push_back(m.vtxIndx());
+	   }
+    }
 
     muon_num = muons->size();
     
@@ -270,6 +301,9 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
     MET_phi = *handle_MET_phi;
     
     //Vertices
+
+    if (getCollectionsResult != 2){
+
     dispvertex_num = dispvertices->size();
     
     for (auto &v: *dispvertices) {
@@ -284,6 +318,8 @@ void ScoutingNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup&
 		dispvtx_tracksize.push_back(v.tracksSize());
 
 	}
+
+    }
 
     privertex_num = privertices->size();
 
@@ -429,9 +465,15 @@ int ScoutingNtuplizer::GetCollections(const edm::Event& iEvent) {
     // Get Vertices
     iEvent.getByToken(token_dispvertices, dispvertices);
     if (!dispvertices.isValid()) {
+      if(is2017data or is2018data){
         throw edm::Exception(edm::errors::ProductNotFound)
-	    << "Could not find DisplacedScoutingVertexCollection." << endl;
+	  << "Could not find DisplacedScoutingVertexCollection." << endl;
 	return 1;
+      }
+      if(is2017MC or is2018MC){
+      std::cout << "Could not find DisplacedScoutingVertexCollection." << endl;
+      return 2;
+      }
     }
     
     iEvent.getByToken(token_privertices, privertices);
@@ -505,9 +547,16 @@ void ScoutingNtuplizer::ResetVariables() {
     muon_nmuonhits.clear();
     muon_npixelhits.clear();
     muon_nstriphits.clear();
+    muon_trkpt.clear();
+    muon_trketa.clear();
+    muon_trkphi.clear();
+    muon_trklambda.clear();
+    muon_trkdsz.clear();
+    muon_trkqoverp.clear();
     muon_vtxindex.clear();
     muon_nexpectedhitsmultiple.clear();
 
+    
     
     // Reset MET
     MET_phi = 0;

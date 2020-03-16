@@ -1,0 +1,87 @@
+000 (4046621.092.000) 03/15 20:22:13 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4046621.092.000) 03/15 20:23:21 Job executing on host: <192.168.1.43:9618?addrs=192.168.1.43-9618+[--1]-9618&noUDP&sock=3360_24bc_3>
+...
+006 (4046621.092.000) 03/15 20:23:23 Image size of job updated: 124640
+	0  -  MemoryUsage of job (MB)
+	0  -  ResidentSetSize of job (KB)
+...
+005 (4046621.092.000) 03/15 20:23:31 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  20458451
+	   Memory (MB)          :        0        1      4022
+...
+000 (4046640.092.000) 03/15 21:06:32 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4046640.092.000) 03/15 21:07:19 Job executing on host: <192.168.1.50:9618?addrs=192.168.1.50-9618+[--1]-9618&noUDP&sock=3247_5221_3>
+...
+006 (4046640.092.000) 03/15 21:07:29 Image size of job updated: 119108
+	116  -  MemoryUsage of job (MB)
+	118136  -  ResidentSetSize of job (KB)
+...
+006 (4046640.092.000) 03/15 21:10:51 Image size of job updated: 1363760
+	116  -  MemoryUsage of job (MB)
+	118136  -  ResidentSetSize of job (KB)
+...
+005 (4046640.092.000) 03/15 21:10:51 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:22, Sys 0 00:00:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:22, Sys 0 00:00:04  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  28493273
+	   Memory (MB)          :      116        1      4020
+...
+000 (4046671.092.000) 03/15 22:27:45 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4046671.092.000) 03/15 22:28:16 Job executing on host: <192.168.1.41:9618?addrs=192.168.1.41-9618+[--1]-9618&noUDP&sock=3368_a17e_3>
+...
+006 (4046671.092.000) 03/15 22:28:24 Image size of job updated: 55948
+	55  -  MemoryUsage of job (MB)
+	55908  -  ResidentSetSize of job (KB)
+...
+006 (4046671.092.000) 03/15 22:33:24 Image size of job updated: 680012
+	665  -  MemoryUsage of job (MB)
+	679980  -  ResidentSetSize of job (KB)
+...
+006 (4046671.092.000) 03/15 22:38:24 Image size of job updated: 742048
+	725  -  MemoryUsage of job (MB)
+	742016  -  ResidentSetSize of job (KB)
+...
+006 (4046671.092.000) 03/15 22:38:37 Image size of job updated: 1363764
+	725  -  MemoryUsage of job (MB)
+	742016  -  ResidentSetSize of job (KB)
+...
+005 (4046671.092.000) 03/15 22:38:38 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:32, Sys 0 00:00:08  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:32, Sys 0 00:00:08  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  20458618
+	   Memory (MB)          :      725        1      4022
+...
+000 (4046674.092.000) 03/15 23:56:07 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...

@@ -1,4 +1,44 @@
 import FWCore.ParameterSet.Config as cms
+import FWCore.ParameterSet.VarParsing as VarParsing
+options = VarParsing.VarParsing('analysis')
+
+options.register('is2017data',
+                 False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2017 data or not.")
+options.register('is2018data',
+                 False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2018 data or not.")
+options.register('is2017MC',
+                 False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2017 MC or not.")
+options.register('is2018MC',
+                 False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2018 MC or not.")
+options.register('condInputFolder',
+                  '',
+                  VarParsing.VarParsing.multiplicity.singleton,
+                  VarParsing.VarParsing.varType.string,
+                  "folder containing list of files for condor")
+options.register('condInputNum',
+                 0,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.int,
+                 "the file to run on")
+options.register('condInputtxt',
+                 '',
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.string,
+                 "txt file containing list of root files for condor")
+options.parseArguments()
+
 
 scoutingntuplizer = cms.EDAnalyzer(
    'ScoutingNtuplizer',
@@ -53,6 +93,10 @@ scoutingntuplizer = cms.EDAnalyzer(
                                      "L1_DoubleMu6_SQ_OS",
                                      "L1_DoubleMu0er1p5_SQ_dR_Max1p4",
                                      "L1_DoubleMu0er2_SQ_dR_Max1p4",
-                                     "L1_DoubleMu0_SQ")
-   
+                                     "L1_DoubleMu0_SQ"),
+    is2017data                 = cms.bool(options.is2017data),
+    is2018data                 = cms.bool(options.is2018data),
+    is2017MC                 = cms.bool(options.is2017MC),
+    is2018MC                 = cms.bool(options.is2018MC)
+
 )

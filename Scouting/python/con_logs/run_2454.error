@@ -1,0 +1,37 @@
+15-Mar-2020 21:32:12 EDT  Initiating request to open file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_548.root
+15-Mar-2020 21:32:15 EDT  Successfully opened file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_548.root
+Begin processing the 1st record. Run 1, Event 15, LumiSection 548 on stream 0 at 15-Mar-2020 21:33:59.988 EDT
+%MSG-e MissingProduct:  MeasurementTrackerEventProducer:MeasurementTrackerEvent  15-Mar-2020 21:34:15 EDT Run: 1 Event: 15
+I fail to get the list of inactive pixel modules, because of 4.2/4.4 event content change.
+%MSG
+Begin processing the 2nd record. Run 1, Event 20, LumiSection 548 on stream 0 at 15-Mar-2020 21:34:15.280 EDT
+Begin processing the 3rd record. Run 1, Event 22, LumiSection 548 on stream 0 at 15-Mar-2020 21:34:15.283 EDT
+Begin processing the 4th record. Run 1, Event 36, LumiSection 548 on stream 0 at 15-Mar-2020 21:34:15.286 EDT
+Begin processing the 5th record. Run 1, Event 44, LumiSection 548 on stream 0 at 15-Mar-2020 21:34:15.289 EDT
+Begin processing the 6th record. Run 1, Event 53, LumiSection 548 on stream 0 at 15-Mar-2020 21:34:15.291 EDT
+Begin processing the 7th record. Run 1, Event 60, LumiSection 548 on stream 0 at 15-Mar-2020 21:34:15.294 EDT
+Begin processing the 8th record. Run 1, Event 81, LumiSection 548 on stream 0 at 15-Mar-2020 21:34:15.296 EDT
+15-Mar-2020 21:34:15 EDT  Closed file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_548.root
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 MissingProduct       -e MeasurementTrack                       1        1
+    2 fileAction           -s file_close                             1        1
+    3 fileAction           -s file_open                              2        2
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 MissingProduct       1/15                              
+    2 fileAction           PostGlobalEndRun                  
+    3 fileAction           pre-events       pre-events       
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Error                   1                   1
+System                  3                   3
+
+dropped waiting message count 0

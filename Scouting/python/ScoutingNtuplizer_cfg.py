@@ -24,7 +24,6 @@ process.load("DQM.L1TMonitor.L1TMonitor_cff")
 # L1 trigger synchronization module - it uses also HltHighLevel filter                                                              
 process.load("DQM.L1TMonitor.L1TSync_cff")
 
-
 # l1tMonitorClient and l1tMonitorClientEndPathSeq                                                                                   
 process.load("DQM.L1TMonitorClient.L1TMonitorClient_cff")
 
@@ -36,28 +35,47 @@ process.gmtStage2Digis = EventFilter.L1TRawToDigi.gmtStage2Digis_cfi.gmtStage2Di
 
 process.l1DigiSeq = cms.Sequence(process.gtDigis*process.gtStage2Digis*process.caloStage2Digis*process.gmtStage2Digis)
 
-
-
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
 
 options = VarParsing.VarParsing('analysis')
-options.outputFile = 'scouting_ntuple_hits.root'
+options.outputFile = 'scouting_ntuple.root'
 #options.inputFiles = 'root://xrootd-cms.infn.it///store/data/Run2017D/ScoutingCaloMuon/RAW/v1/000/302/031/00000/301F9B4E-648D-E711-8480-02163E012748.root' 
 #'root://cmsxrootd.fnal.gov//store/data/Run2017E/ScoutingCaloMuon/RAW/v1/000/303/832/00000/DAF942AC-CAA1-E711-BD1B-02163E01A69F.root'
-options.inputFiles = '/store/data/Run2017D/ScoutingCaloMuon/RAW/v1/000/302/033/00000/9C0FCC26-8B8D-E711-8A1F-02163E01273D.root'
+options.inputFiles = 'file:./step2_BtoLLP_output_2.root'
+#'/store/data/Run2017D/ScoutingCaloMuon/RAW/v1/000/302/033/00000/9C0FCC26-8B8D-E711-8A1F-02163E01273D.root'
 #'/store/data/Run2017C/ScoutingCaloMuon/RAW/v1/000/302/026/00000/F815A335-528D-E711-AEF7-02163E014129.root'
 #'/store/data/Run2017D/ScoutingCaloMuon/RAW/v1/000/302/663/00000/DCB0847B-1498-E711-B26A-02163E01A3FB.root' 
 #'/store/data/Run2017E/ScoutingCaloMuon/RAW/v1/000/304/204/00000/447CB8DC-0AA7-E711-A550-02163E01A362.root' 
 #'root://cmsxrootd.fnal.gov//store/data/Run2017F/ScoutingCaloMuon/RAW/v1/000/305/377/00000/180B769B-0CB7-E711-9825-02163E01A4CE.root'
 
-#options.maxEvents = -1
-options.maxEvents = 100
+options.maxEvents = -1
+#options.maxEvents = 100
 options.register('reportEvery',
                  1,
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.int,
                  "Number of events to process before reporting progress.")
+options.register('is2017data',
+                 True,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2017 data or not.")
+options.register('is2018data',
+                 False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2018 data or not.")
+options.register('is2017MC',
+                 False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2017 MC or not.")
+options.register('is2018MC',
+                 False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool,
+                 "Determines whether sample is 2018 MC or not.")
 options.parseArguments()
 
 
@@ -75,7 +93,6 @@ process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(options.inputFiles)
 )
 
-
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.Reconstruction_cff')
 process.load('Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff')
@@ -84,7 +101,24 @@ process.load("Configuration.StandardSequences.RawToDigi_Data_cff")
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 from Configuration.AlCa.autoCond import autoCond
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '92X_dataRun2_HLT_v7', '')
+
+
+if options.is2017data:
+    print "running on 2017 data"
+    process.GlobalTag = GlobalTag(process.GlobalTag, '92X_dataRun2_HLT_v7', '')                                                     
+
+if options.is2018data:
+    print "running on 2018 data"
+    process.GlobalTag = GlobalTag(process.GlobalTag, '101X_dataRun2_HLT_v7', '')                                                    
+
+if options.is2017MC:
+    print "running on 2017 MC"
+    process.GlobalTag = GlobalTag(process.GlobalTag, '94X_mc2017_realistic_v11', '')
+
+if options.is2018MC:
+    print "running on 2018 MC"
+    process.GlobalTag = GlobalTag(process.GlobalTag, '102X_upgrade2018_realistic_v15', '')
+
 
 #process.source.lumisToProcess = LumiList.LumiList(filename = './JSON.txt').getVLuminosityBlockRange()
 process.offlineBeamSpot = cms.EDProducer("BeamSpotProducer")

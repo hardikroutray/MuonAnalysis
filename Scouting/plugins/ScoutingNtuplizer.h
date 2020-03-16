@@ -194,6 +194,12 @@ class ScoutingNtuplizer : public edm::EDAnalyzer {
       std::vector<int> muon_nmuonhits;
       std::vector<int> muon_npixelhits;
       std::vector<int> muon_nstriphits;
+      std::vector<float> muon_trkpt;
+      std::vector<float> muon_trketa;
+      std::vector<float> muon_trkphi;
+      std::vector<float> muon_trklambda;
+      std::vector<float> muon_trkdsz;
+      std::vector<float> muon_trkqoverp;
 
       std::vector<std::vector<int>> muon_vtxindex;
 
@@ -281,5 +287,11 @@ class ScoutingNtuplizer : public edm::EDAnalyzer {
       edm::Handle<std::vector<int> > handle_muonexpectedhits;
 
       std::vector<int> muon_nexpectedhitsmultiple;
+
+      bool is2017data;
+      bool is2018data;
+      
+      bool is2017MC;
+      bool is2018MC;
 
 };

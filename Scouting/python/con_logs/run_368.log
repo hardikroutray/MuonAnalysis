@@ -1,0 +1,89 @@
+000 (4046621.368.000) 03/15 20:22:17 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4046621.368.000) 03/15 20:24:23 Job executing on host: <192.168.1.40:9618?addrs=192.168.1.40-9618+[--1]-9618&noUDP&sock=3366_a17e_3>
+...
+006 (4046621.368.000) 03/15 20:24:24 Image size of job updated: 125660
+	0  -  MemoryUsage of job (MB)
+	0  -  ResidentSetSize of job (KB)
+...
+005 (4046621.368.000) 03/15 20:24:43 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  20457847
+	   Memory (MB)          :        0        1      4022
+...
+009 (4046621.368.000) 03/15 20:24:46 Job was aborted by the user.
+	via condor_rm (by user routray)
+...
+009 (4046621.368.000) 03/15 20:24:50 Job was aborted by the user.
+	via condor_rm (by user routray)
+...
+000 (4046640.368.000) 03/15 21:06:33 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4046640.368.000) 03/15 21:07:31 Job executing on host: <192.168.1.51:9618?addrs=192.168.1.51-9618+[--1]-9618&noUDP&sock=3125_b25b_3>
+...
+006 (4046640.368.000) 03/15 21:07:40 Image size of job updated: 58960
+	58  -  MemoryUsage of job (MB)
+	58896  -  ResidentSetSize of job (KB)
+...
+006 (4046640.368.000) 03/15 21:12:41 Image size of job updated: 715436
+	699  -  MemoryUsage of job (MB)
+	715436  -  ResidentSetSize of job (KB)
+...
+006 (4046640.368.000) 03/15 21:13:15 Image size of job updated: 1363764
+	699  -  MemoryUsage of job (MB)
+	715436  -  ResidentSetSize of job (KB)
+...
+005 (4046640.368.000) 03/15 21:13:15 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:24, Sys 0 00:00:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:24, Sys 0 00:00:04  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  28494197
+	   Memory (MB)          :      699        1      4020
+...
+000 (4046671.368.000) 03/15 22:27:46 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4046671.368.000) 03/15 22:28:25 Job executing on host: <192.168.1.49:9618?addrs=192.168.1.49-9618+[--1]-9618&noUDP&sock=3240_e427_3>
+...
+006 (4046671.368.000) 03/15 22:28:34 Image size of job updated: 52768
+	52  -  MemoryUsage of job (MB)
+	52752  -  ResidentSetSize of job (KB)
+...
+006 (4046671.368.000) 03/15 22:33:35 Image size of job updated: 713180
+	697  -  MemoryUsage of job (MB)
+	712980  -  ResidentSetSize of job (KB)
+...
+005 (4046671.368.000) 03/15 22:37:52 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:27, Sys 0 00:00:06  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:27, Sys 0 00:00:06  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  28491601
+	   Memory (MB)          :      697        1      4020
+...
+000 (4046674.368.000) 03/15 23:56:08 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...

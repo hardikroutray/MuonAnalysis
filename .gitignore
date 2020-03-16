@@ -2,3 +2,6 @@
 *.pyc
 *.py~
 *.h~
+*.sh~
+*.jcl~
+*.txt

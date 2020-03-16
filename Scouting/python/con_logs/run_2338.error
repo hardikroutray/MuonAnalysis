@@ -1,0 +1,43 @@
+15-Mar-2020 21:31:51 EDT  Initiating request to open file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_443.root
+15-Mar-2020 21:31:53 EDT  Successfully opened file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_443.root
+Begin processing the 1st record. Run 1, Event 4, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:34.077 EDT
+%MSG-e MissingProduct:  MeasurementTrackerEventProducer:MeasurementTrackerEvent  15-Mar-2020 21:33:42 EDT Run: 1 Event: 4
+I fail to get the list of inactive pixel modules, because of 4.2/4.4 event content change.
+%MSG
+Begin processing the 2nd record. Run 1, Event 7, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.643 EDT
+Begin processing the 3rd record. Run 1, Event 19, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.662 EDT
+Begin processing the 4th record. Run 1, Event 20, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.664 EDT
+Begin processing the 5th record. Run 1, Event 28, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.668 EDT
+Begin processing the 6th record. Run 1, Event 30, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.670 EDT
+Begin processing the 7th record. Run 1, Event 31, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.673 EDT
+Begin processing the 8th record. Run 1, Event 42, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.676 EDT
+Begin processing the 9th record. Run 1, Event 48, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.678 EDT
+Begin processing the 10th record. Run 1, Event 52, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.683 EDT
+Begin processing the 11th record. Run 1, Event 70, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.685 EDT
+Begin processing the 12th record. Run 1, Event 75, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.687 EDT
+Begin processing the 13th record. Run 1, Event 86, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.688 EDT
+Begin processing the 14th record. Run 1, Event 90, LumiSection 443 on stream 0 at 15-Mar-2020 21:33:42.694 EDT
+15-Mar-2020 21:33:42 EDT  Closed file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_443.root
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 MissingProduct       -e MeasurementTrack                       1        1
+    2 fileAction           -s file_close                             1        1
+    3 fileAction           -s file_open                              2        2
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 MissingProduct       1/4                               
+    2 fileAction           PostGlobalEndRun                  
+    3 fileAction           pre-events       pre-events       
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Error                   1                   1
+System                  3                   3
+
+dropped waiting message count 0

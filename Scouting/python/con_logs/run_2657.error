@@ -1,0 +1,38 @@
+15-Mar-2020 21:33:57 EDT  Initiating request to open file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_730.root
+15-Mar-2020 21:34:06 EDT  Successfully opened file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_730.root
+Begin processing the 1st record. Run 1, Event 12, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:11.726 EDT
+%MSG-e MissingProduct:  MeasurementTrackerEventProducer:MeasurementTrackerEvent  15-Mar-2020 21:36:14 EDT Run: 1 Event: 12
+I fail to get the list of inactive pixel modules, because of 4.2/4.4 event content change.
+%MSG
+Begin processing the 2nd record. Run 1, Event 46, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.917 EDT
+Begin processing the 3rd record. Run 1, Event 50, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.928 EDT
+Begin processing the 4th record. Run 1, Event 71, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.932 EDT
+Begin processing the 5th record. Run 1, Event 76, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.935 EDT
+Begin processing the 6th record. Run 1, Event 79, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.938 EDT
+Begin processing the 7th record. Run 1, Event 87, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.941 EDT
+Begin processing the 8th record. Run 1, Event 88, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.943 EDT
+Begin processing the 9th record. Run 1, Event 94, LumiSection 730 on stream 0 at 15-Mar-2020 21:36:14.945 EDT
+15-Mar-2020 21:36:14 EDT  Closed file file:/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_5_6000211_lumi/step2_BtoLLP_output_730.root
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 MissingProduct       -e MeasurementTrack                       1        1
+    2 fileAction           -s file_close                             1        1
+    3 fileAction           -s file_open                              2        2
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 MissingProduct       1/12                              
+    2 fileAction           PostGlobalEndRun                  
+    3 fileAction           pre-events       pre-events       
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Error                   1                   1
+System                  3                   3
+
+dropped waiting message count 0
