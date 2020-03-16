@@ -5,3 +5,6 @@
 *.sh~
 *.jcl~
 *.txt
+*.log
+*.error
+*.out
