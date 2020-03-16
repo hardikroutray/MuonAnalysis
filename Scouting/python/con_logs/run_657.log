@@ -77,3 +77,85 @@
 ...
 000 (4046674.657.000) 03/15 23:56:10 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
 ...
+009 (4046674.657.000) 03/16 00:49:24 Job was aborted by the user.
+	via condor_rm (by user routray)
+...
+000 (4047692.657.000) 03/16 09:41:52 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047692.657.000) 03/16 09:54:09 Job executing on host: <192.168.1.66:9618?addrs=192.168.1.66-9618+[--1]-9618&noUDP&sock=3560_0345_33>
+...
+006 (4047692.657.000) 03/16 09:54:17 Image size of job updated: 135172
+	90  -  MemoryUsage of job (MB)
+	91452  -  ResidentSetSize of job (KB)
+...
+005 (4047692.657.000) 03/16 09:55:41 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:21, Sys 0 00:00:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:21, Sys 0 00:00:04  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  22684277
+	   Memory (MB)          :       90        1      4015
+...
+000 (4047694.657.000) 03/16 10:18:57 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047694.657.000) 03/16 10:20:01 Job executing on host: <192.168.1.45:9618?addrs=192.168.1.45-9618+[--1]-9618&noUDP&sock=3341_bd3f_3>
+...
+006 (4047694.657.000) 03/16 10:20:02 Image size of job updated: 1472
+	0  -  MemoryUsage of job (MB)
+	0  -  ResidentSetSize of job (KB)
+...
+005 (4047694.657.000) 03/16 10:20:10 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  20460088
+	   Memory (MB)          :        0        1      4022
+...
+000 (4047695.657.000) 03/16 10:31:36 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047695.657.000) 03/16 10:37:51 Job executing on host: <192.168.1.62:9618?addrs=192.168.1.62-9618+[--1]-9618&noUDP&sock=2992_c8ab_24>
+...
+006 (4047695.657.000) 03/16 10:38:00 Image size of job updated: 51372
+	50  -  MemoryUsage of job (MB)
+	51164  -  ResidentSetSize of job (KB)
+...
+005 (4047695.657.000) 03/16 10:41:23 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:37, Sys 0 00:00:05  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:37, Sys 0 00:00:05  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  22663505
+	   Memory (MB)          :       50        1      4001
+...
+000 (4048296.657.000) 03/16 11:27:06 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+009 (4048296.657.000) 03/16 11:27:58 Job was aborted by the user.
+	via condor_rm (by user routray)
+...
+000 (4048297.657.000) 03/16 11:29:02 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+009 (4048297.657.000) 03/16 11:30:13 Job was aborted by the user.
+	via condor_rm (by user routray)
+...

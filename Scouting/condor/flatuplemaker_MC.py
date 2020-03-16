@@ -26,13 +26,13 @@ from DataFormats.FWLite import Handle, Events
 
 
 #file_mu = ROOT.TFile("./scouting_ntuple_test.root")                                                                                
-file_mu = ROOT.TFile("./Phi_mass20_ct2_trkparam.root") 
+file_mu = ROOT.TFile("./BPhi_m2_ct5_ntuple.root") 
 tree_mu = file_mu.Get('scoutingntuplizer')
 
 #file_mu = ROOT.TFile('/cms/routray/crab_output/muontuples_10percent/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017C_v1/200131_190828/0000/scouting_ntuple_{0}.root'.format(sys.argv[1]))
 #tree_mu = file_mu.Get('scoutingntuplizer')
 
-outfile = ROOT.TFile('flat_dimuon_tree_Phi_mass20_ct2_baseline_noiso_trkparam.root', 'recreate')
+outfile = ROOT.TFile('flat_dimuon_tree_BPhi_mass20_ct2_baseline_noiso_v1.root', 'recreate')
 outfile.cd()
 
 #outfile = TFile("flatdimuontrees_baselineselections/C/flatdimuontree_{0}.root".format(sys.argv[1]), "recreate")

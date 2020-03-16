@@ -30,3 +30,58 @@
 	   Disk (KB)            :        2        2  20457847
 	   Memory (MB)          :       55        1      4022
 ...
+000 (4047694.2428.000) 03/16 10:19:08 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047694.2428.000) 03/16 10:21:57 Job executing on host: <192.168.1.53:9618?addrs=192.168.1.53-9618+[--1]-9618&noUDP&sock=3369_5fdf_35>
+...
+006 (4047694.2428.000) 03/16 10:21:58 Image size of job updated: 125920
+	0  -  MemoryUsage of job (MB)
+	0  -  ResidentSetSize of job (KB)
+...
+005 (4047694.2428.000) 03/16 10:22:03 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  22662181
+	   Memory (MB)          :        0        1      4001
+...
+000 (4047695.2428.000) 03/16 10:31:45 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047695.2428.000) 03/16 10:51:34 Job executing on host: <192.168.1.64:9618?addrs=192.168.1.64-9618+[--1]-9618&noUDP&sock=3497_7c66_22>
+...
+006 (4047695.2428.000) 03/16 10:51:43 Image size of job updated: 43004
+	42  -  MemoryUsage of job (MB)
+	42856  -  ResidentSetSize of job (KB)
+...
+006 (4047695.2428.000) 03/16 10:56:44 Image size of job updated: 768528
+	747  -  MemoryUsage of job (MB)
+	764188  -  ResidentSetSize of job (KB)
+...
+005 (4047695.2428.000) 03/16 10:57:02 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:48, Sys 0 00:00:07  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:48, Sys 0 00:00:07  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  22685211
+	   Memory (MB)          :      747        1      4015
+...
+000 (4048296.2428.000) 03/16 11:27:17 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+009 (4048296.2428.000) 03/16 11:28:12 Job was aborted by the user.
+	via condor_rm (by user routray)
+...

@@ -5,6 +5,7 @@
 *.sh~
 *.jcl~
 *.txt
-*.log
-*.error
-*.out
+con_logs/*.log
+con_logs/*.error
+con_logs/*.out
+jobs_2mu_10percent

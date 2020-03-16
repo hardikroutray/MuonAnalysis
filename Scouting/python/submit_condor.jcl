@@ -9,4 +9,4 @@ output =./con_logs/run_$(Process).out
 executable = submit_condor.sh
 arguments = $(Process)
 Notification=never
-queue 1979
+queue 1000

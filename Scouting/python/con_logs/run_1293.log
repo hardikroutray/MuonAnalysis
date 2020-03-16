@@ -52,3 +52,88 @@
 ...
 000 (4046674.1293.000) 03/15 23:56:12 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
 ...
+009 (4046674.1293.000) 03/16 00:49:28 Job was aborted by the user.
+	via condor_rm (by user routray)
+...
+000 (4047692.1293.000) 03/16 09:41:57 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047692.1293.000) 03/16 09:57:23 Job executing on host: <192.168.1.60:9618?addrs=192.168.1.60-9618+[--1]-9618&noUDP&sock=3480_d34a_3>
+...
+006 (4047692.1293.000) 03/16 09:57:32 Image size of job updated: 70060
+	56  -  MemoryUsage of job (MB)
+	56360  -  ResidentSetSize of job (KB)
+...
+006 (4047692.1293.000) 03/16 10:02:33 Image size of job updated: 725812
+	706  -  MemoryUsage of job (MB)
+	722388  -  ResidentSetSize of job (KB)
+...
+005 (4047692.1293.000) 03/16 10:04:17 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:26, Sys 0 00:00:04  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:26, Sys 0 00:00:04  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  22661048
+	   Memory (MB)          :      706        1      4001
+...
+000 (4047694.1293.000) 03/16 10:19:01 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047694.1293.000) 03/16 10:20:32 Job executing on host: <192.168.1.61:9618?addrs=192.168.1.61-9618+[--1]-9618&noUDP&sock=3335_bd3f_11>
+...
+006 (4047694.1293.000) 03/16 10:20:33 Image size of job updated: 2
+	0  -  MemoryUsage of job (MB)
+	0  -  ResidentSetSize of job (KB)
+...
+005 (4047694.1293.000) 03/16 10:20:45 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  22662097
+	   Memory (MB)          :        0        1      4001
+...
+000 (4047695.1293.000) 03/16 10:31:39 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+001 (4047695.1293.000) 03/16 10:44:20 Job executing on host: <192.168.1.64:9618?addrs=192.168.1.64-9618+[--1]-9618&noUDP&sock=3497_7c66_22>
+...
+006 (4047695.1293.000) 03/16 10:44:29 Image size of job updated: 34632
+	34  -  MemoryUsage of job (MB)
+	34632  -  ResidentSetSize of job (KB)
+...
+006 (4047695.1293.000) 03/16 10:48:54 Image size of job updated: 1363772
+	34  -  MemoryUsage of job (MB)
+	34632  -  ResidentSetSize of job (KB)
+...
+005 (4047695.1293.000) 03/16 10:48:54 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:00:45, Sys 0 00:00:07  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:45, Sys 0 00:00:07  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :        2        2  22685211
+	   Memory (MB)          :       34        1      4015
+...
+000 (4048296.1293.000) 03/16 11:27:09 Job submitted from host: <192.168.1.109:9618?addrs=192.168.1.109-9618+[--1]-9618&noUDP&sock=3153_969b_4>
+...
+009 (4048296.1293.000) 03/16 11:28:03 Job was aborted by the user.
+	via condor_rm (by user routray)
+...

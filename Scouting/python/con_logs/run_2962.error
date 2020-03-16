@@ -1,8 +1,0 @@
------ Begin Fatal Exception 15-Mar-2020 21:34:25 EDT-----------------------
-An exception of category 'ConfigFileReadError' occurred while
-   [0] Processing the python configuration file named ScoutingNtuplizer_condor_cfg.py
-Exception Message:
-python encountered the error: <type 'exceptions.IndexError'>
-list index out of range
------ End Fatal Exception -------------------------------------------------
-mv: cannot stat 'scouting_ntuple_2962.root': No such file or directory

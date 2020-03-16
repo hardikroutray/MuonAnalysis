@@ -109,8 +109,8 @@ process.TFileService=cms.Service("TFileService",
                                  )
 
 
-#file_list = sorted(glob.glob(options.condInputFolder))
-file_list = [line.rstrip('\n') for line in open(options.condInputtxt)]                                                          
+file_list = sorted(glob.glob(options.condInputFolder))
+#file_list = [line.rstrip('\n') for line in open(options.condInputtxt)]                                                          
 runfile = file_list[options.condInputNum]
 print runfile
 
