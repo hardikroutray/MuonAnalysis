@@ -28,129 +28,101 @@ ROOT.FWLiteEnabler.enable()
 from DataFormats.FWLite import Handle, Events
 
 
-file_mu = ROOT.TFile("/cms/scoutingmuon/hardik/condor_output/ggPhi_ntuples/ggPhi_m2_ct100_ntuple.root")                           
+# file_mu = ROOT.TFile("/cms/scoutingmuon/hardik/condor_output/ggPhi_ntuples/ggPhi_m2_ct100_ntuple.root")                           
+# tree_mu = file_mu.Get('scoutingntuplizer')
+
+file_mu = ROOT.TFile('/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017D_v1/200307_225553/0000/scouting_ntuple_{0}.root'.format(sys.argv[1]))
 tree_mu = file_mu.Get('scoutingntuplizer')
 
-#file_mu = ROOT.TFile('/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017D_v1/200307_225553/0000/scouting_ntuple_{0}.root'.format(sys.argv[1]))
-#tree_mu = file_mu.Get('scoutingntuplizer')
-
-outfile = ROOT.TFile('flat_dimuon_tree_ggPhi_mass2_ct100_new.root', 'recreate')
-outfile.cd()
-
-# outfile = TFile("flatdimuontrees_baselineselections_no_iso_no_dphidimudv/2017/D/flatdimuontree_{0}.root".format(sys.argv[1]), "recreate")
+# outfile = ROOT.TFile('histos.root', 'recreate')
 # outfile.cd()
 
-tree = ROOT.TTree('events', 'flat tree with dimuon info')
 
-run = array("f", [0.0])
-lumi = array("f", [0.0])
-event_num = array("d", [0.0])
-dimuon_pt = array("f", [0.0])
-dimuon_mass = array("f", [0.0])
-dimuon_mass_uncorr = array("f", [0.0])
-lxy = array("f", [0.0])
-dphidimudv = array("f", [0.0])
-detadimudv = array("f", [0.0])
-ctau = array("f", [0.0])
-muon1_dxy = array("f", [0.0])
-muon2_dxy = array("f", [0.0])
-muon1_edxy = array("f", [0.0])
-muon2_edxy = array("f", [0.0])
-muon1_dxycorr = array("f", [0.0])
-muon2_dxycorr = array("f", [0.0])
-muon1_trkiso = array("f", [0.0])
-muon2_trkiso = array("f", [0.0])
-muon1_chi2overndof = array("f", [0.0])
-muon2_chi2overndof = array("f", [0.0])
-muon1_pt = array("f", [0.0])
-muon2_pt = array("f", [0.0])
-muon1_eta = array("f", [0.0])
-muon2_eta = array("f", [0.0])
-muon1_phi = array("f", [0.0])
-muon2_phi = array("f", [0.0])
-muon1_phicorr = array("f", [0.0])
-muon2_phicorr = array("f", [0.0])
-muon1_excesspixelhits = array("f", [0.0])
-muon2_excesspixelhits = array("f", [0.0])
-PVx = array("f", [0.0])
-PVy = array("f", [0.0])
-PVz = array("f", [0.0])
-BSx = array("f", [0.0])
-BSy = array("f", [0.0])
-BSz = array("f", [0.0])
-DVx = array("f", [0.0])
-DVy = array("f", [0.0])
-DVz = array("f", [0.0])
-DVxerr = array("f", [0.0])
-DVyerr = array("f", [0.0])
-DVzerr = array("f", [0.0])
-DV_chi2overndof = array("f", [0.0])
-distPixel = array("f", [0.0])
-detamumu = array("f", [0.0])
-dphimumu = array("f", [0.0])
-dRmumu = array("f", [0.0])
-dRmuon1jet = array("f", [0.0]) 
-dRmuon2jet = array("f", [0.0])
-njet = array("f", [0.0])
-btag = array("f", [0.0])
-mva = array("f", [0.0])
+print "Running on file", file_mu
 
-#tree.Branch('muon1_pt', muon1_pt, 'muon1_pt/F')
-tree.Branch('run', run, 'run/F')
-tree.Branch('lumi', lumi, 'lumi/F')
-tree.Branch('event_num', event_num, 'event_num/D')
-tree.Branch('dimuon_pt', dimuon_pt, 'dimuon_pt/F')
-tree.Branch('dimuon_mass', dimuon_mass, 'dimuon_mass/F')
-tree.Branch('dimuon_mass_uncorr', dimuon_mass_uncorr, 'dimuon_mass_uncorr/F')
-#tree.Branch('Lxy', Lxy, 'Lxy/F')
-tree.Branch('lxy', lxy, 'lxy/F')
-#tree.Branch('rho', rho, 'rho/F')
-#tree.Branch('theta', theta, 'theta/F')
-tree.Branch('dphidimudv', dphidimudv, 'dphidimudv/F')
-tree.Branch('detadimudv', detadimudv, 'detadimudv/F')
-tree.Branch('ctau', ctau, 'ctau/F')
-tree.Branch('muon1_dxy', muon1_dxy, 'muon1_dxy/F')
-tree.Branch('muon2_dxy', muon2_dxy, 'muon2_dxy/F')
-tree.Branch('muon1_edxy', muon1_edxy, 'muon1_edxy/F')
-tree.Branch('muon2_edxy', muon2_edxy, 'muon2_edxy/F')
-tree.Branch('muon1_dxycorr', muon1_dxycorr, 'muon1_dxycorr/F')
-tree.Branch('muon2_dxycorr', muon2_dxycorr, 'muon2_dxycorr/F')
-tree.Branch('muon1_trkiso', muon1_trkiso, 'muon1_trkiso/F')
-tree.Branch('muon2_trkiso', muon2_trkiso, 'muon2_trkiso/F')
-tree.Branch('muon1_chi2overndof', muon1_chi2overndof, 'muon1_chi2overndof/F')
-tree.Branch('muon2_chi2overndof', muon2_chi2overndof, 'muon2_chi2overndof/F')
-tree.Branch('muon1_pt', muon1_pt, 'muon1_pt/F')
-tree.Branch('muon2_pt', muon2_pt, 'muon2_pt/F')
-tree.Branch('muon1_eta', muon1_eta, 'muon1_eta/F')
-tree.Branch('muon2_eta', muon2_eta, 'muon2_eta/F')
-tree.Branch('muon1_phi', muon1_phi, 'muon1_phi/F')
-tree.Branch('muon2_phi', muon2_phi, 'muon2_phi/F')
-tree.Branch('muon1_phicorr', muon1_phicorr, 'muon1_phicorr/F')
-tree.Branch('muon2_phicorr', muon2_phicorr, 'muon2_phicorr/F')
-tree.Branch('muon1_excesspixelhits', muon1_excesspixelhits, 'muon1_excesspixelhits/F')
-tree.Branch('muon2_excesspixelhits', muon2_excesspixelhits, 'muon2_excesspixelhits/F')
-tree.Branch('PVx', PVx, 'PVx/F')
-tree.Branch('PVy', PVy, 'PVy/F')
-tree.Branch('PVz', PVz, 'PVz/F')
-tree.Branch('BSx', BSx, 'BSx/F')
-tree.Branch('BSy', BSy, 'BSy/F')
-tree.Branch('BSz', BSz, 'BSz/F')
-tree.Branch('DVx', DVx, 'DVx/F')
-tree.Branch('DVy', DVy, 'DVy/F')
-tree.Branch('DVz', DVz, 'DVz/F')
-tree.Branch('DVxerr', DVxerr, 'DVxerr/F')
-tree.Branch('DVyerr', DVyerr, 'DVyerr/F')
-tree.Branch('DVzerr', DVzerr, 'DVzerr/F')
-tree.Branch('DV_chi2overndof', DV_chi2overndof, 'DV_chi2overndof/F')
-tree.Branch('distPixel', distPixel, 'distPixel/F')
-tree.Branch('detamumu', detamumu, 'detamumu/F')
-tree.Branch('dphimumu', dphimumu, 'dphimumu/F')
-tree.Branch('dRmumu', dRmumu, 'dRmumu/F')
-tree.Branch('dRmuon1jet', dRmuon1jet, 'dRmuon1jet/F')
-tree.Branch('dRmuon2jet', dRmuon2jet, 'dRmuon2jet/F')
-tree.Branch('njet', njet, 'njet/F')
-tree.Branch('btag', btag, 'btag/F')
-tree.Branch('mva', mva, 'mva/F')
+outfile = TFile("output/2017/D/flatdimuontree_{0}.root".format(sys.argv[1]), "recreate")
+outfile.cd()
+
+# ttree = ROOT.TTree('events', 'flat tree with muon, jet, met info')
+
+# run = array("f", [0.0])
+# lumi = array("f", [0.0])
+# event_num = array("d", [0.0])
+# met_pt = array("f", [0.0])
+# met_eta = array("f", [0.0])
+# met_phi = array("f", [0.0])
+# num_muons = array("i", [0])
+# muon_pt = array("f", maxn*[0.0])
+# muon_eta = array("f", maxn*[0.0])
+# muon_phi = array("f", maxn*[0.0])
+# muon_phicorr = array("f", maxn*[0.0])
+# muon_q = array("f", maxn*[0.0])
+# muon_excesspixelhits = array("f", maxn*[0.0])
+# muon_chi2overndof = array("f", maxn*[0.0])
+# muon_dxy = array("f", maxn*[0.0])
+# muon_dxycorr = array("f", maxn*[0.0])
+# num_jets = array("i", [0])
+# jet_pt = array("f", maxn*[0.0])
+# jet_eta = array("f", maxn*[0.0])
+# jet_phi = array("f", maxn*[0.0])
+# jet_mass = array("f", maxn*[0.0])
+# jet_csv = array("f", maxn*[0.0])
+# PVx = array("f", [0.0])
+# PVy = array("f", [0.0])
+# PVz = array("f", [0.0])
+# num_DV = array("i", [0])
+# DVx = array("f", maxn*[0.0])
+# DVy = array("f", maxn*[0.0])
+# DVz = array("f", maxn*[0.0])
+# DVxerr = array("f", maxn*[0.0])
+# DVyerr = array("f", maxn*[0.0])
+# DVzerr = array("f", maxn*[0.0])
+# DV_chi2overndof = array("f", maxn*[0.0])
+
+# ttree.Branch("run", run, "run/I")
+# ttree.Branch("lumi", lumi, "lumi/I")
+# ttree.Branch("event_num", event_num, "event_num/I")
+# ttree.Branch("met_pt", met_pt, "met_pt/F")
+# ttree.Branch("met_eta", met_eta, "met_eta/F")
+# ttree.Branch("met_phi", met_pt, "met_phi/F")
+# ttree.Branch("num_muons", num_muons, "num_muons/I")
+# ttree.Branch("muon_pt", muon_pt, "muon_pt[num_muons]/F")
+# ttree.Branch("muon_eta", muon_eta, "muon_eta[num_muons]/F")
+# ttree.Branch("muon_phi", muon_phi, "muon_phi[num_muons]/F")
+# ttree.Branch("muon_phicorr", muon_phicorr, "muon_phicorr[num_muons]/F")
+# ttree.Branch("muon_excesspixelhits", muon_excesspixelhits, "muon_excesspixelhits[num_muons]/F")
+# ttree.Branch("muon_q", muon_q, "muon_q[num_muons]/F")
+# ttree.Branch("muon_chi2overndof", muon_chi2overndof, "muon_chi2overndof[num_muons]/F")
+# ttree.Branch("muon_dxy", muon_dxy, "muon_dxy[num_muons]/F")
+# ttree.Branch("muon_dxycorr", muon_dxycorr, "muon_dxycorr[num_muons]/F")
+# ttree.Branch("num_jets", num_jets, "num_jets/I")
+# ttree.Branch("jet_pt", jet_pt, "jet_pt[num_jets]/F")
+# ttree.Branch("jet_eta", jet_eta, "jet_eta[num_jets]/F")
+# ttree.Branch("jet_phi", jet_phi, "jet_phi[num_jets]/F")
+# ttree.Branch("jet_mass", jet_mass, "jet_mass[num_jets]/F")
+# ttree.Branch("jet_csv", jet_csv, "jet_csv[num_jets]/F")
+# ttree.Branch("PVx", PVx, "PVx/F")
+# ttree.Branch("PVy", PVy, "PVy/F")
+# ttree.Branch("PVz", PVz, "PVz/F")
+# ttree.Branch("num_DV", num_DV, "num_DV/I")
+# ttree.Branch("DVx", DVx, "DVx[num_DV]/F")
+# ttree.Branch("DVy", DVy, "DVy[num_DV]/F")
+# ttree.Branch("DVz", DVz, "DVz[num_DV]/F")
+# ttree.Branch("DVxerr", DVxerr, "DVxerr[num_DV]/F")
+# ttree.Branch("DVyerr", DVyerr, "DVyerr[num_DV]/F")
+# ttree.Branch("DVzerr", DVzerr, "DVzerr[num_DV]/F")
+# ttree.Branch("DV_chi2overndof", DV_chi2overndof, "DV_chi2overndof[num_DV]/F")
+# ttree.Branch("dRmuon_closestjet", dRmuon_closestjet, "dRmuon_closestjet[num_muons]/F")
+
+
+
+############ Declare Histos #####################
+
+
+munu_transversemass = ROOT.TH1F("munu_transversemass", "munu_transversemass", 1000, 0, 10)
+
+dimuon_mass_corr = ROOT.TH1F("dimuon_mass_corr", "dimuon_mass_corr", 1000, 0, 10) 
+dimuon_mass_uncorr = ROOT.TH1F("dimuon_mass_uncorr", "dimuon_mass_uncorr", 1000, 0, 10)
 
 
 #DeltaRmumu = ROOT.TH1F("DeltaRmumu", "DeltaRmumu", 100, -10, 10)
@@ -160,13 +132,22 @@ tree.Branch('mva', mva, 'mva/F')
 #nvalidpixelhits = ROOT.TH1F("nvalidpixelhits", "nvalidpixelhits", 100, -10, 10)
 #nvalidstriphits = ROOT.TH1F("nvalidstriphits", "nvalidstriphits", 100, -10, 10)
 
+
+
 numberofevents = 0
 
 for i, event in enumerate(tree_mu):
 
-
     numberofevents += 1
-    
+
+    # if numberofevents > 10000:
+    #     break
+
+    ################Initialize four vectors , three vectors, variables etc ####################
+
+    mup = TLorentzVector(0, 0, 0, 0)
+    nup = TLorentzVector(0, 0, 0, 0)
+
     mu1p = TLorentzVector(0, 0, 0, 0)
     mu2p = TLorentzVector(0, 0, 0, 0)
     mu1p_uncorr = TLorentzVector(0, 0, 0, 0)
@@ -184,7 +165,6 @@ for i, event in enumerate(tree_mu):
     motherv3D = TVector3(0.,0.,0.)
     jetp = TLorentzVector(0, 0, 0, 0)
     
-
     passL1_DoubleMu4_SQ_OS_dR_Max1p2 = 0
     passL1_DoubleMu4p5_SQ_OS_dR_Max1p2 = 0
     passL1_DoubleMu_15_7 = 0
@@ -194,7 +174,12 @@ for i, event in enumerate(tree_mu):
     passDST_DoubleMu1_noVtx_CaloScouting_v = 0
     passHLT = 0
 
+
+
     # print "-----In Run" ,tree_mu.Run , "---Lumi", tree_mu.Lumi, "----Event", tree_mu.Event, "-----------"
+
+    ############### Select L1 and HLT seeds #####################
+
 
     for j, _ in enumerate(event.l1bitmap):
 
@@ -226,22 +211,49 @@ for i, event in enumerate(tree_mu):
     passHLT = passDST_DoubleMu3_noVtx_CaloScouting_v + passDST_DoubleMu1_noVtx_CaloScouting_v
 
 #    print "In event", i , "passL1?", passL1, "passHLT?", passHLT
-
         
-    if passL1 == 0:
-        continue
+    # if passL1 == 0:
+    #     continue
 
     if passHLT == 0:
         continue
 
-    if len(event.muon_pt) < 2:
+    if len(event.muon_pt) < 1:
         continue
 
-    if event.dispvertex_num < 1:
-        continue
+    # if event.dispvertex_num == 0:
+    #     continue
 
     # print "Number of muons", len(event.muon_pt), "Number of vertices", event.dispvertex_num
 
+
+######################Start munu Analysis####################################################################
+
+
+    if len(event.muon_pt) == 1:
+
+        if event.muon_pt[0] > 25 and event.met_pt > 0:
+
+            mup.SetPtEtaPhiM(event.muon_pt[0], event.muon_eta[0], event.muon_phi[0], 0.1056583745)
+            nup.SetPtEtaPhiM(event.met_pt, event.met_eta, event.met_phi, 0)
+
+            print "munu transverse mass", (mup+nup).Mt()
+
+            munu_transversemass.Fill((mup+nup).Mt())
+
+
+#####################End munu Analysis########################################################################
+
+
+#########################Start Displaced Dimuon Analysis#######################################################
+
+    if len(event.muon_pt) < 2:
+        continue
+
+    if event.dispvertex_num < 1:                                                                                                  
+        continue 
+
+    ###### Decay Vertex Quality Cut ########
 
     mindverror = 9999
     bestdv = -1
@@ -265,14 +277,13 @@ for i, event in enumerate(tree_mu):
         if np.maximum(event.dispvertex_ex[dv],event.dispvertex_ey[dv]) < mindverror:
             mindverror = np.maximum(event.dispvertex_ex[dv],event.dispvertex_ey[dv])            
             bestdv = dv
-
     
     # print "best dv index(if -1 no best DV)", bestdv
 
     if bestdv == -1:
         continue
 
-
+    ########Excess Pixel Hits Calculation#################
 
     # NModules = 1856
     # for i in range(1856)
@@ -285,11 +296,14 @@ for i, event in enumerate(tree_mu):
 
     # distPixelmin = 9999
 
-    # for module in range(1856):
-    imodule = ROOT.point_in_which_module(event.dispvertex_x[bestdv], event.dispvertex_y[bestdv], event.dispvertex_z[bestdv])
+    for module in range(1856):
+        imodule = ROOT.point_in_which_module(event.dispvertex_x[bestdv], event.dispvertex_y[bestdv], event.dispvertex_z[bestdv])
     # print imodule
     distPixelmin = ROOT.dist_to_imodule_plane(event.dispvertex_x[bestdv], event.dispvertex_y[bestdv], event.dispvertex_z[bestdv], imodule)
     # print distPixelmin
+
+    ########Associating best DV to chosen muon pair###################
+
 
     numberofmuons_invtx = 0
     highestpt = -1
@@ -327,6 +341,12 @@ for i, event in enumerate(tree_mu):
     if numberofmuons_invtx != 2:
         continue
          
+
+
+    #######Muon Quality Cuts#########################
+
+
+
     # print "DV chi2overndof", event.dispvertex_chi2[bestdv]/event.dispvertex_ndof[bestdv], "DV_xerr", event.dispvertex_ex[bestdv], "DVyerr", event.dispvertex_ey[bestdv], "DVzerr", event.dispvertex_ez[bestdv]
  
 
@@ -364,6 +384,8 @@ for i, event in enumerate(tree_mu):
         continue
 
 
+    ############Muon track iso cut##############################3
+
     # print "muon1 track iso", event.muon_trackIso[lead], "muon2 track iso", event.muon_trackIso[sublead]
 
 
@@ -371,6 +393,9 @@ for i, event in enumerate(tree_mu):
     #     continue
     # if event.muon_trackIso[sublead] >= 0.1:
     #     continue
+
+
+    #######Main part of Dimuon Analysis with extra cuts and phi correction at DV##############
 
 
     # print "* sign of charges", event.muon_q[lead]*event.muon_q[sublead]
@@ -393,10 +418,12 @@ for i, event in enumerate(tree_mu):
     muon2_phicorrected = ROOT.recalculate_phi_at_DV(muon2_PCA[0], muon2_PCA[1], muon2_PCA[2], mu2p_uncorr.Px(), mu2p_uncorr.Py(), mu2p_uncorr.Pz(), event.muon_q[sublead], event.dispvertex_x[bestdv], event.dispvertex_y[bestdv] )
     # print "muon2 PCA", muon2_PCA[0], muon2_PCA[1], muon2_PCA[2], "muon2_phicorr", muon2_phicorrected
 
-
     mu1p.SetPtEtaPhiM(event.muon_pt[lead], event.muon_eta[lead], muon1_phicorrected, 0.1056583745)
     mu2p.SetPtEtaPhiM(event.muon_pt[sublead], event.muon_eta[sublead], muon2_phicorrected, 0.1056583745)
     motherp = mu1p + mu2p
+
+
+    ##################Muon dR(mu,closest jet) Isolation cut##############################
 
     dRmuon1jetmin = 9999
     dRmuon2jetmin = 9999
@@ -430,6 +457,8 @@ for i, event in enumerate(tree_mu):
     # if dRmuon2jetmin <= 0.3:
     #     continue
             
+    ############Calculation of decay length and other dimuon variables#########33
+
     motherv2D.SetXYZ(motherp.Px() , motherp.Py(), 0)
     motherv3D.SetXYZ(motherp.Px() , motherp.Py(), motherp.Pz())
     PVvector2D.SetXYZ(event.privertex_x[0], event.privertex_y[0], 0)
@@ -451,6 +480,8 @@ for i, event in enumerate(tree_mu):
 
     # print "lxy", decaylength2Dmod, "dphi DVPV dimupt", angle1, "cos(angle1)", np.cos(angle1), "dphi muon1 muon2", mu1p.DeltaPhi(mu2p)
 
+    #############More cuts################################33
+
     if decaylength2Dmod >= 11:
         continue
     # if np.abs(angle1) >= 0.02:
@@ -469,67 +500,84 @@ for i, event in enumerate(tree_mu):
         
     if passexcesshits != 1:
         continue
+
+
+    ########Fill Dimuon Histos##############
+
+    dimuon_mass_corr.Fill((mu1p + mu2p).M())
+    dimuon_mass_uncorr.Fill((mu1p_uncorr + mu2p_uncorr).M())
     
-    # print "I have passed and am getting filled in the tree woohoo"
+    #######End Dimuon Histos################
+    
+    # print "I have passed and am getting filled in the flat tree woohoo"
 
-    run[0] = tree_mu.Run
-    lumi[0] = tree_mu.Lumi
-    event_num[0] = tree_mu.Event
-    dimuon_pt[0] = ((mu1p + mu2p).Pt())
-    dimuon_mass[0] = ((mu1p + mu2p).M())
-    dimuon_mass_uncorr[0] = ((mu1p_uncorr + mu2p_uncorr).M())
-    lxy[0] = decaylength2Dmod
-    dphidimudv[0] = angle1
-    detadimudv[0] = angle2
-    ctau[0] = ctausigned
-    muon1_dxy[0] = event.muon_dxy[lead]
-    muon2_dxy[0] = event.muon_dxy[sublead]
-    muon1_edxy[0] = event.muon_edxy[lead]
-    muon2_edxy[0] = event.muon_edxy[sublead]
-    muon1_dxycorr[0] = dxy1corr
-    muon2_dxycorr[0] = dxy2corr
-    # muon1_dxycorr[0] = -1*(event.dispvertex_x[bestdv] - event.privertex_x[0])*np.sin(mu1p.Phi()) + (event.dispvertex_y[bestdv] - event.privertex_y[0])*np.cos(mu1p.Phi()) 
-    # muon2_dxycorr[0] = -1*(event.dispvertex_x[bestdv] - event.privertex_x[0])*np.sin(mu2p.Phi()) + (event.dispvertex_y[bestdv] - event.privertex_y[0])*np.cos(mu2p.Phi())
-    muon1_trkiso[0] = event.muon_trackIso[lead]
-    muon2_trkiso[0] = event.muon_trackIso[sublead]
-    muon1_chi2overndof[0] = event.muon_chi2[lead]/event.muon_ndof[lead]
-    muon2_chi2overndof[0] = event.muon_chi2[sublead]/event.muon_ndof[sublead]
-    muon1_pt[0] = mu1p.Pt()
-    muon2_pt[0] = mu2p.Pt()
-    muon1_eta[0] = mu1p.Eta()
-    muon2_eta[0] = mu2p.Eta()
-    muon1_phi[0] = mu1p.Phi()
-    muon2_phi[0] = mu2p.Phi()
-    muon1_phicorr[0] = muon1_phicorrected
-    muon2_phicorr[0] = muon2_phicorrected
-    muon1_excesspixelhits[0] = event.nvalidpixelhits[lead] - event.nexpectedhitsmultiple[lead]
-    muon2_excesspixelhits[0] = event.nvalidpixelhits[sublead] - event.nexpectedhitsmultiple[sublead]
-    PVx[0] = event.privertex_x[0]
-    PVy[0] = event.privertex_y[0]
-    PVz[0] = event.privertex_z[0]
-    BSx[0] = event.BS_x
-    BSy[0] = event.BS_y
-    BSz[0] = event.BS_z
-    DVx[0] = event.dispvertex_x[bestdv]
-    DVy[0] = event.dispvertex_y[bestdv]
-    DVz[0] = event.dispvertex_z[bestdv]
-    DVxerr[0] = event.dispvertex_ex[bestdv]
-    DVyerr[0] = event.dispvertex_ey[bestdv]
-    DVzerr[0] = event.dispvertex_ez[bestdv]
-    DV_chi2overndof[0] = event.dispvertex_chi2[bestdv]/event.dispvertex_ndof[bestdv]
-    distPixel[0] = distPixelmin
-    detamumu[0] = mu1p.Eta() - mu2p.Eta()
-    dphimumu[0] = mu1p.DeltaPhi(mu2p)
-    dRmumu[0] = mu1p.DeltaR(mu2p)
-    dRmuon1jet[0] = dRmuon1jetmin
-    dRmuon2jet[0] = dRmuon2jetmin
-    njet[0] = event.jet_num
-    btag[0] = btagvalue
-    mva[0] = mvavalue
 
-    tree.Fill()
+    # run[0] = tree_mu.Run
+    # lumi[0] = tree_mu.Lumi
+    # event_num[0] = tree_mu.Event
+    # dimuon_pt[0] = ((mu1p + mu2p).Pt())
+    # dimuon_mass[0] = ((mu1p + mu2p).M())
+    # dimuon_mass_uncorr[0] = ((mu1p_uncorr + mu2p_uncorr).M())
+    # lxy[0] = decaylength2Dmod
+    # dphidimudv[0] = angle1
+    # detadimudv[0] = angle2
+    # ctau[0] = ctausigned
+    # muon1_dxy[0] = event.muon_dxy[lead]
+    # muon2_dxy[0] = event.muon_dxy[sublead]
+    # muon1_edxy[0] = event.muon_edxy[lead]
+    # muon2_edxy[0] = event.muon_edxy[sublead]
+    # muon1_dxycorr[0] = dxy1corr
+    # muon2_dxycorr[0] = dxy2corr
+    # # muon1_dxycorr[0] = -1*(event.dispvertex_x[bestdv] - event.privertex_x[0])*np.sin(mu1p.Phi()) + (event.dispvertex_y[bestdv] - event.privertex_y[0])*np.cos(mu1p.Phi()) 
+    # # muon2_dxycorr[0] = -1*(event.dispvertex_x[bestdv] - event.privertex_x[0])*np.sin(mu2p.Phi()) + (event.dispvertex_y[bestdv] - event.privertex_y[0])*np.cos(mu2p.Phi())
+    # muon1_trkiso[0] = event.muon_trackIso[lead]
+    # muon2_trkiso[0] = event.muon_trackIso[sublead]
+    # muon1_chi2overndof[0] = event.muon_chi2[lead]/event.muon_ndof[lead]
+    # muon2_chi2overndof[0] = event.muon_chi2[sublead]/event.muon_ndof[sublead]
+    # muon1_pt[0] = mu1p.Pt()
+    # muon2_pt[0] = mu2p.Pt()
+    # muon1_eta[0] = mu1p.Eta()
+    # muon2_eta[0] = mu2p.Eta()
+    # muon1_phi[0] = mu1p.Phi()
+    # muon2_phi[0] = mu2p.Phi()
+    # muon1_phicorr[0] = muon1_phicorrected
+    # muon2_phicorr[0] = muon2_phicorrected
+    # muon1_excesspixelhits[0] = event.nvalidpixelhits[lead] - event.nexpectedhitsmultiple[lead]
+    # muon2_excesspixelhits[0] = event.nvalidpixelhits[sublead] - event.nexpectedhitsmultiple[sublead]
+    # PVx[0] = event.privertex_x[0]
+    # PVy[0] = event.privertex_y[0]
+    # PVz[0] = event.privertex_z[0]
+    # BSx[0] = event.BS_x
+    # BSy[0] = event.BS_y
+    # BSz[0] = event.BS_z
+    # DVx[0] = event.dispvertex_x[bestdv]
+    # DVy[0] = event.dispvertex_y[bestdv]
+    # DVz[0] = event.dispvertex_z[bestdv]
+    # DVxerr[0] = event.dispvertex_ex[bestdv]
+    # DVyerr[0] = event.dispvertex_ey[bestdv]
+    # DVzerr[0] = event.dispvertex_ez[bestdv]
+    # DV_chi2overndof[0] = event.dispvertex_chi2[bestdv]/event.dispvertex_ndof[bestdv]
+    # distPixel[0] = distPixelmin
+    # detamumu[0] = mu1p.Eta() - mu2p.Eta()
+    # dphimumu[0] = mu1p.DeltaPhi(mu2p)
+    # dRmumu[0] = mu1p.DeltaR(mu2p)
+    # dRmuon1jet[0] = dRmuon1jetmin
+    # dRmuon2jet[0] = dRmuon2jetmin
+    # njet[0] = event.jet_num
+    # btag[0] = btagvalue
+    # mva[0] = mvavalue
+
+    # ttree.Fill()
+
+
+#########################################End Dimuon Analysis###################################################
+
 
 print "number of events in the file", numberofevents
+
+munu_transversemass.Write()
+dimuon_mass_corr.Write()
+dimuon_mass_uncorr.Write()
 
 #DeltaRmumu.Write()
 #muchi2overndof.Write()

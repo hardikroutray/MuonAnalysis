@@ -17,11 +17,14 @@ echo $1
 
 #cmsRun ScoutingNtuplizer_condor_cfg.py condInputFolder="/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_7/src/BtoLLP_m_2_ct_50_6000211_lumi/*" condInputNum=$1 is2017MC=True
 
-cmsRun ScoutingNtuplizer_condor_cfg.py condInputFolder="/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_0_patch1/src/ggHmumu_AOD_Hmass2_Hctau0_5/*" condInputNum=$1 is2017MC=True
+cmsRun ScoutingNtuplizer_condor_cfg.py condInputFolder="/cms/scoutingmuon/hardik/Samples_Production_sl7/CMSSW_9_4_0_patch1/src/ggHmumu_AOD_Hmass2_Hctau1_0/*" condInputNum=$1 is2017MC=True
 
 #cmsRun ScoutingNtuplizer_condor_cfg.py condInputtxt="BToPhi_params_mphi2_ctau20mm_RAWSIM_v0.txt" condInputNum=$1 is2017MC=True     
+
+#cmsRun ScoutingNtuplizer_condor_cfg.py condInputtxt="HToZdZdTo2Mu2X_params_mzd15_ctau50mm_RAWSIM_v10.txt" condInputNum=$1 is2018MC=True     
                                                                           
 echo condInputNum
 
 #mv scouting_ntuple_$1.root /cms/scoutingmuon/hardik/condor_output/BPhi_ntuples/BPhi_m2_ct50 
-mv scouting_ntuple_$1.root /cms/scoutingmuon/hardik/condor_output/ggPhi_ntuples/ggPhi_m2_ct0p5
+mv scouting_ntuple_$1.root /cms/scoutingmuon/hardik/condor_output/ggPhi_ntuples/ggPhi_m2_ct1
+#mv scouting_ntuple_$1.root /cms/scoutingmuon/hardik/condor_output/HZdZd_ntuples/HZdZd_m15_ct50  
