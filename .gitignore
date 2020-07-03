@@ -5,6 +5,10 @@
 *.sh~
 *.jcl~
 *.log
+*.png
+*gp.txt
+*poly.txt
+*.csv
 output.txt
 Scouting/python/con_logs/*
 Scouting/condor/con_logs/*
