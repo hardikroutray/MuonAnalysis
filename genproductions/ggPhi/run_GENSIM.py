@@ -126,19 +126,19 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
         parameterSets = cms.vstring('pythia8CommonSettings',
             'pythia8CUEP8M1Settings','processParameters'),
         processParameters = cms.vstring(
-                                        # 'JetMatching:setMad = off',
-					# 'JetMatching:scheme = 1',
-					# 'JetMatching:merge = on',
-					# 'JetMatching:jetAlgorithm = 2',
-					# 'JetMatching:etaJetMax = 999.',
-					# 'JetMatching:coneRadius = 1.',
-					# 'JetMatching:slowJetPower = 1',
-					# 'JetMatching:qCut = 3.', #this is the actual merging scale
-					# 'JetMatching:doFxFx = off',
-					# 'JetMatching:qCutME = 1.',#this must match the ptj cut in the lhe generation step
-					# 'JetMatching:nQmatch = 4', #4 corresponds to 4-flavour scheme (no matching of b-quarks), 5 for 5-flavour scheme
-					# 'JetMatching:nJetMax = 1', #number of partons in born matrix element for highest
-					# 'JetMatching:doShowerKt = off',  #off for MLM matching, turn on for shower-kT matching
+                                        'JetMatching:setMad = off',
+					'JetMatching:scheme = 1',
+					'JetMatching:merge = on',
+					'JetMatching:jetAlgorithm = 2',
+					'JetMatching:etaJetMax = 999.',
+					'JetMatching:coneRadius = 1.',
+					'JetMatching:slowJetPower = 1',
+					'JetMatching:qCut = 3.', #this is the actual merging scale
+					'JetMatching:doFxFx = off',
+					'JetMatching:qCutME = 1.',#this must match the ptj cut in the lhe generation step
+					'JetMatching:nQmatch = 4', #4 corresponds to 4-flavour scheme (no matching of b-quarks), 5 for 5-flavour scheme
+					'JetMatching:nJetMax = 1', #number of partons in born matrix element for highest
+					'JetMatching:doShowerKt = off',  #off for MLM matching, turn on for shower-kT matching
 
 
 			                'LesHouches:setLifetime = 2',
