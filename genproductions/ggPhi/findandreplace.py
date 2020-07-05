@@ -1,5 +1,5 @@
-file="unweighted_events_100000_1p7.lhe"
-fo=open("unweighted_events_6000211_100000events_mass1p7.lhe","w")
+file="unweighted_events_100000_mass6.lhe"
+fo=open("unweighted_events_6000211_100000events_mass6.lhe","w")
 with open(file,"r") as f:
     for line in f:
         newline = line
