@@ -17,5 +17,5 @@ cd MuonAnalysis/Scouting/condor/
 
 echo $(($1+1))
 
-
-python flatuplemaker_baseline.py $(($1+1)) 
+# python flatuplemaker_baseline.py $(($1+1)) 
+python flatuplemaker_baseline_v1.py --Data17 --storetreepreobjsel $(($1+1)) 

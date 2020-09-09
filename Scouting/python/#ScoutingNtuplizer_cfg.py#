@@ -1,12 +1,11 @@
-import os
-import sys
-import glob
-
 import FWCore.ParameterSet.Config as cms
 import FWCore.ParameterSet.VarParsing as VarParsing
 import FWCore.PythonUtilities.LumiList as LumiList
 
+
+
 process = cms.Process("ScoutingNtuplizer")
+
 
 import EventFilter.L1GlobalTriggerRawToDigi.l1GtUnpack_cfi
 import EventFilter.L1TRawToDigi.gtStage2Digis_cfi
@@ -57,7 +56,7 @@ options.register('reportEvery',
                  VarParsing.VarParsing.varType.int,
                  "Number of events to process before reporting progress.")
 options.register('is2017data',
-                 False,
+                 True,
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool,
                  "Determines whether sample is 2017 data or not.")
@@ -76,21 +75,6 @@ options.register('is2018MC',
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool,
                  "Determines whether sample is 2018 MC or not.")
-options.register('condInputFolder',
-                  '',
-                  VarParsing.VarParsing.multiplicity.singleton,
-                  VarParsing.VarParsing.varType.string,
-                  "folder containing list of files for condor")
-options.register('condInputtxt',                                                                                                  
-                 '',                                                                                                              
-                 VarParsing.VarParsing.multiplicity.singleton,                                                                    
-                 VarParsing.VarParsing.varType.string,                                                                            
-                 "txt file containing list of root files for condor")                                                             
-options.register('condInputNum',
-                 0,
-                 VarParsing.VarParsing.multiplicity.singleton,
-                 VarParsing.VarParsing.varType.int,
-                 "the file to run on")
 options.parseArguments()
 
 
@@ -99,34 +83,14 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(options.maxEvents)
 )
 
-
-ofi = 'scouting_ntuple_' + str(options.condInputNum) + '.root'
-print ofi
-
-process.TFileService=cms.Service("TFileService",
-                                 fileName=cms.string(ofi),
-                                 closeFileFast = cms.untracked.bool(True)
-                                 )
-
-
-# file_list = sorted(glob.glob(options.condInputFolder))
-file_list = [line.rstrip('\n') for line in open(options.condInputtxt)]                                                          
-runfile = file_list[options.condInputNum]
-print runfile
-
-process.source = cms.Source("PoolSource",
-        fileNames = cms.untracked.vstring('file:' + runfile)
-)
-
-
-
-
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(
     options.reportEvery)
 
 process.MessageLogger.suppressWarning = cms.untracked.vstring(["MeasurementTrackerEvent"])
 
-
+process.source = cms.Source("PoolSource",
+    fileNames = cms.untracked.vstring(options.inputFiles)
+)
 
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.Reconstruction_cff')
@@ -169,6 +133,6 @@ process.hitMaker = cms.EDProducer("HitMaker",
         measurementTrackerEventInputTag = cms.InputTag("MeasurementTrackerEvent"),
         )
 
-process.scoutingntuplizer.output_file_name = cms.string(ofi)
+process.scoutingntuplizer.output_file_name = cms.string(options.outputFile)
 
 process.p = cms.Path(process.l1DigiSeq*process.offlineBeamSpot*process.MeasurementTrackerEvent*process.hitMaker*process.scoutingntuplizer)

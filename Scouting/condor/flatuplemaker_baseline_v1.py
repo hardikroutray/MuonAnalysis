@@ -9,6 +9,33 @@ import ROOT
 ROOT.gROOT.SetBatch(True)
 sys.argv = oldargv
 
+
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--MC17", default=False, action="store_true")
+parser.add_argument("--MC18", default=False, action="store_true")
+parser.add_argument("--Data17", default=False, action="store_true")
+parser.add_argument("--Data18", default=False, action="store_true")
+
+parser.add_argument("--storetreepreobjsel", default=False, action="store_true")
+parser.add_argument("--dobaselinenoisocuts", default=False, action="store_true")
+parser.add_argument("--dobaselineisocuts", default=False, action="store_true")
+parser.add_argument("--doextracuts", default=False, action="store_true")
+parser.add_argument("--dodxycuts", default=False, action="store_true")
+
+parser.add_argument("file_number", help="file to run on",type=int)
+
+args = parser.parse_args()
+
+if args.MC17:
+    print "running on 2017 MC file", args.file_number
+if args.MC18:
+    print "running on 2018 MC file", args.file_number
+if args.Data17:
+    print "running on 2017 Data file", args.file_number
+if args.Data18:
+    print "running on 2018 Data file", args.file_number
+
 ROOT.gROOT.LoadMacro("calculate_pixel.cc")
 ROOT.gROOT.LoadMacro("propagation_utils.cc")
 
@@ -27,24 +54,104 @@ ROOT.FWLiteEnabler.enable()
 # load FWlite python libraries                                                                                                       
 from DataFormats.FWLite import Handle, Events
 
-
-file_mu = ROOT.TFile("/cms/scoutingmuon/hardik/condor_output/ggPhi_ntuples/ggPhi_m0p35_ct0p5_ntuple.root")                           
-tree_mu = file_mu.Get('scoutingntuplizer')
-
-#file_mu = ROOT.TFile('/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017D_v1/200307_225553/0000/scouting_ntuple_{0}.root'.format(sys.argv[1]))
-#tree_mu = file_mu.Get('scoutingntuplizer')
-
-outfile = ROOT.TFile('flat_dimuon_tree_ggPhi_mass0p35_ct0p5_newest0.root', 'recreate')
-outfile.cd()
-
-# outfile = TFile("flatdimuontrees_baselineselections_no_iso_no_dphidimudv/2017/D/flatdimuontree_{0}.root".format(sys.argv[1]), "recreate")
+# file_mu = ROOT.TFile("/cms/scoutingmuon/hardik/condor_output/ggPhi_ntuples/ggPhi_m0p35_ct0p5_ntuple.root")                           
+# tree_mu = file_mu.Get('scoutingntuplizer')
+# outfile = ROOT.TFile('flat_dimuon_tree_ggPhi_mass0p35_ct0p5_newest.root', 'recreate')
 # outfile.cd()
 
-tree = ROOT.TTree('events', 'flat tree with dimuon info')
+
+path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017D_v1/200307_225553/0000/'
+
+if os.path.isfile(path + '/scouting_ntuple_{}.root'.format(args.file_number)) != 1:
+    print "file does not exist"
+    exit()
+
+file_mu = ROOT.TFile(path + 'scouting_ntuple_{}.root'.format(args.file_number))
+tree_mu = file_mu.Get('scoutingntuplizer')
+
+outfile = TFile("flatdimuontrees_noselections/2017/D/flatdimuontree_{}.root".format(args.file_number), "recreate")
+outfile.cd()
+
+print file_mu
+
+if args.storetreepreobjsel:
+
+    tree0 = ROOT.TTree('events0', 'flat tree with dimuon info-preobjsel')
+
+    run0 = array("f", [0.0])
+    lumi0 = array("f", [0.0])
+    event_num0 = array("d", [0.0])
+    L10 = array("f", [0.0])
+    HLT0 = array("f", [0.0])
+    # passobjsel = array("f", [0.0])
+
+    tree0.Branch('run0', run0, 'run0/F')
+    tree0.Branch('lumi0', lumi0, 'lumi0/F')
+    tree0.Branch('event_num0', event_num0, 'event_num0/D')
+    tree0.Branch('L10', L10, 'L10/F')
+    tree0.Branch('HLT0', HLT0, 'HLT0/F')
+    # tree0.Branch('passobjsel', passobjsel, 'passobjsel/F')
+
+    for i0, event0 in enumerate(tree_mu):
+
+        pass0L1_DoubleMu4_SQ_OS_dR_Max1p2 = 0
+        pass0L1_DoubleMu4p5_SQ_OS_dR_Max1p2 = 0
+        pass0L1_DoubleMu_15_7 = 0
+        pass0L1_DoubleMu0er1p4_SQ_OS_dR_Max1p4 = 0
+        pass0L1 = 0
+        pass0DST_DoubleMu3_noVtx_CaloScouting_v = 0
+        pass0DST_DoubleMu1_noVtx_CaloScouting_v = 0
+        pass0HLT = 0
+
+        for j0, _0 in enumerate(event0.l1bitmap):
+
+            if args.MC17 or args.Data17:
+
+                if event0.l1bitmap[j0].first == "L1_DoubleMu4_SQ_OS_dR_Max1p2" and event0.l1bitmap[j0].second == 1:
+                    pass0L1_DoubleMu4_SQ_OS_dR_Max1p2 = 1
+
+            elif args.MC18 or args.Data18:
+
+                if event0.l1bitmap[j0].first == "L1_DoubleMu4p5_SQ_OS_dR_Max1p2" and event0.l1bitmap[j0].second == 1:
+                    pass0L1_DoubleMu4p5_SQ_OS_dR_Max1p2 = 1
+
+            if event0.l1bitmap[j0].first == "L1_DoubleMu_15_7" and event0.l1bitmap[j0].second == 1:
+                pass0L1_DoubleMu_15_7 = 1
+
+            if event0.l1bitmap[j0].first == "L1_DoubleMu0er1p4_SQ_OS_dR_Max1p4" and event0.l1bitmap[j0].second == 1:
+                pass0L1_DoubleMu0er1p4_SQ_OS_dR_Max1p4 = 1
+
+        pass0L1 = pass0L1_DoubleMu4_SQ_OS_dR_Max1p2 + pass0L1_DoubleMu4p5_SQ_OS_dR_Max1p2 + pass0L1_DoubleMu_15_7 + pass0L1_DoubleMu0er1p4_SQ_OS_dR_Max1p4
+
+        for j0, _0 in enumerate(event0.hltbitmap):
+
+            if event0.hltbitmap[j0].first == "DST_DoubleMu3_noVtx_CaloScouting_v" and event0.hltbitmap[j0].second == 1:
+                pass0DST_DoubleMu3_noVtx_CaloScouting_v = 1
+
+        for j0, _ in enumerate(event0.hltbitmap):
+
+            if event0.hltbitmap[j0].first == "DST_DoubleMu1_noVtx_CaloScouting_v" and event.hltbitmap[j0].second == 1:
+                pass0DST_DoubleMu1_noVtx_CaloScouting_v = 1
+
+        pass0HLT = pass0DST_DoubleMu3_noVtx_CaloScouting_v + pass0DST_DoubleMu1_noVtx_CaloScouting_v
+
+        run0[0] = tree_mu.Run
+        lumi0[0] = tree_mu.Lumi
+        event_num0[0] = tree_mu.Event
+        L10[0] = pass0L1
+        HLT0[0] = pass0HLT
+
+        tree0.Fill()
+
+
+tree = ROOT.TTree('events', 'flat tree with dimuon info-L1HLTobjsel')
 
 run = array("f", [0.0])
 lumi = array("f", [0.0])
 event_num = array("d", [0.0])
+L1 = array("f", [0.0])
+HLT = array("f", [0.0])
+signcharges = array("f", [0.0])
 dimuon_pt = array("f", [0.0])
 dimuon_mass = array("f", [0.0])
 dimuon_mass_uncorr = array("f", [0.0])
@@ -70,8 +177,11 @@ muon1_phi = array("f", [0.0])
 muon2_phi = array("f", [0.0])
 muon1_phicorr = array("f", [0.0])
 muon2_phicorr = array("f", [0.0])
+muon1_ntrklayers = array("f", [0.0])
+muon2_ntrklayers = array("f", [0.0])
 muon1_excesspixelhits = array("f", [0.0])
 muon2_excesspixelhits = array("f", [0.0])
+passbothexcesshits = array("f", [0.0])
 PVx = array("f", [0.0])
 PVy = array("f", [0.0])
 PVz = array("f", [0.0])
@@ -99,11 +209,13 @@ muon2_dxysig = array("f", [0.0])
 muon1_dxyscaled = array("f", [0.0])
 muon2_dxyscaled = array("f", [0.0])
 
-
 #tree.Branch('muon1_pt', muon1_pt, 'muon1_pt/F')
 tree.Branch('run', run, 'run/F')
 tree.Branch('lumi', lumi, 'lumi/F')
 tree.Branch('event_num', event_num, 'event_num/D')
+tree.Branch('L1', L1, 'L1/F')
+tree.Branch('HLT', HLT, 'HLT/F')
+tree.Branch('signcharges', signcharges, 'signcharges/F')
 tree.Branch('dimuon_pt', dimuon_pt, 'dimuon_pt/F')
 tree.Branch('dimuon_mass', dimuon_mass, 'dimuon_mass/F')
 tree.Branch('dimuon_mass_uncorr', dimuon_mass_uncorr, 'dimuon_mass_uncorr/F')
@@ -132,8 +244,11 @@ tree.Branch('muon1_phi', muon1_phi, 'muon1_phi/F')
 tree.Branch('muon2_phi', muon2_phi, 'muon2_phi/F')
 tree.Branch('muon1_phicorr', muon1_phicorr, 'muon1_phicorr/F')
 tree.Branch('muon2_phicorr', muon2_phicorr, 'muon2_phicorr/F')
+tree.Branch('muon1_ntrklayers', muon1_ntrklayers, 'muon1_ntrklayers/F')
+tree.Branch('muon2_ntrklayers', muon2_ntrklayers, 'muon2_ntrklayers/F')
 tree.Branch('muon1_excesspixelhits', muon1_excesspixelhits, 'muon1_excesspixelhits/F')
 tree.Branch('muon2_excesspixelhits', muon2_excesspixelhits, 'muon2_excesspixelhits/F')
+tree.Branch('passbothexcesshits', passbothexcesshits, 'passbothexcesshits/F')
 tree.Branch('PVx', PVx, 'PVx/F')
 tree.Branch('PVy', PVy, 'PVy/F')
 tree.Branch('PVz', PVz, 'PVz/F')
@@ -161,7 +276,6 @@ tree.Branch('muon2_dxysig', muon2_dxysig, 'muon2_dxysig/F')
 tree.Branch('muon1_dxyscaled', muon1_dxyscaled, 'muon1_dxyscaled/F')
 tree.Branch('muon2_dxyscaled', muon2_dxyscaled, 'muon2_dxyscaled/F')
 
-
 #DeltaRmumu = ROOT.TH1F("DeltaRmumu", "DeltaRmumu", 100, -10, 10)
 #muchi2overndof = ROOT.TH1F("muchi2overndof", "muchi2overndof", 100, -10, 10)
 #ntrackerlayerswithmeasurement = ROOT.TH1F("ntrackerlayerswithmeasurement", "ntrackerlayerswithmeasurement", 100, -10, 10)
@@ -172,7 +286,6 @@ tree.Branch('muon2_dxyscaled', muon2_dxyscaled, 'muon2_dxyscaled/F')
 numberofevents = 0
 
 for i, event in enumerate(tree_mu):
-
 
     numberofevents += 1
     
@@ -206,11 +319,15 @@ for i, event in enumerate(tree_mu):
 
     for j, _ in enumerate(event.l1bitmap):
 
-        # if event.l1bitmap[j].first == "L1_DoubleMu4_SQ_OS_dR_Max1p2" and event.l1bitmap[j].second == 1:
-        #     passL1_DoubleMu4_SQ_OS_dR_Max1p2 = 1
+        if args.MC17 or args.Data17:
 
-        if event.l1bitmap[j].first == "L1_DoubleMu4p5_SQ_OS_dR_Max1p2" and event.l1bitmap[j].second == 1:
-            passL1_DoubleMu4p5_SQ_OS_dR_Max1p2 = 1
+            if event.l1bitmap[j].first == "L1_DoubleMu4_SQ_OS_dR_Max1p2" and event.l1bitmap[j].second == 1:
+                passL1_DoubleMu4_SQ_OS_dR_Max1p2 = 1
+
+        elif args.MC18 or args.Data18:
+
+            if event.l1bitmap[j].first == "L1_DoubleMu4p5_SQ_OS_dR_Max1p2" and event.l1bitmap[j].second == 1:
+                passL1_DoubleMu4p5_SQ_OS_dR_Max1p2 = 1
 
         if event.l1bitmap[j].first == "L1_DoubleMu_15_7" and event.l1bitmap[j].second == 1:
             passL1_DoubleMu_15_7 = 1
@@ -281,7 +398,6 @@ for i, event in enumerate(tree_mu):
         continue
 
 
-
     # NModules = 1856
     # for i in range(1856)
     # print ROOT.point_in_which_module(event.dispvertex_x[bestdv], event.dispvertex_y[bestdv], event.dispvertex_z[bestdv])
@@ -341,47 +457,44 @@ for i, event in enumerate(tree_mu):
     # print "muon1 chi2overndof", event.muon_chi2[lead]/event.muon_ndof[lead], "muon2 chi2overndof", event.muon_chi2[sublead]/event.muon_ndof[sublead]
 
 
-    if event.muon_chi2[lead]/event.muon_ndof[lead] >= 3:
-        continue
-    if event.muon_chi2[sublead]/event.muon_ndof[sublead] >= 3:
-        continue
+    if args.dobaselinenoisocuts or args.dobaselineisocuts:
+    
+        if event.muon_chi2[lead]/event.muon_ndof[lead] >= 3:
+            continue
+        if event.muon_chi2[sublead]/event.muon_ndof[sublead] >= 3:
+            continue
 
+        # print "muon1 pt", event.muon_pt[lead], "muon2 pt", event.muon_pt[sublead]
 
-    # print "muon1 pt", event.muon_pt[lead], "muon2 pt", event.muon_pt[sublead]
+        if event.muon_pt[lead] <= 3:
+            continue
+        if event.muon_pt[sublead] <= 3:
+            continue
 
-    if event.muon_pt[lead] <= 3:
-        continue
-    if event.muon_pt[sublead] <= 3:
-        continue
+        # print "muon1 eta", event.muon_eta[lead], "muon2 eta", event.muon_eta[sublead] 
 
-    # print "muon1 eta", event.muon_eta[lead], "muon2 eta", event.muon_eta[sublead] 
+        if np.abs(event.muon_eta[lead]) >= 2.4:
+            continue
+        if np.abs(event.muon_eta[sublead]) >= 2.4:
+            continue
 
-    if np.abs(event.muon_eta[lead]) >= 2.4:
-        continue
-    if np.abs(event.muon_eta[sublead]) >= 2.4:
-        continue
-
-
-    # print "muon 1 trackerlayerwm", event.ntrackerlayerswithmeasurement[lead], "muon2 trackerlayerwm", event.ntrackerlayerswithmeasurement[sublead]
+        # print "muon 1 trackerlayerwm", event.ntrackerlayerswithmeasurement[lead], "muon2 trackerlayerwm", event.ntrackerlayerswithmeasurement[sublead]
         
+        if event.ntrackerlayerswithmeasurement[lead] <= 5:                           
+            continue  
+        if event.ntrackerlayerswithmeasurement[sublead] <= 5:
+            continue
 
-    if event.ntrackerlayerswithmeasurement[lead] <= 5:                           
-        continue  
-    if event.ntrackerlayerswithmeasurement[sublead] <= 5:
-        continue
+        # print "muon1 track iso", event.muon_trackIso[lead], "muon2 track iso", event.muon_trackIso[sublead]
 
+    if args.dobaselineisocuts:
 
-    # print "muon1 track iso", event.muon_trackIso[lead], "muon2 track iso", event.muon_trackIso[sublead]
-
-
-    # if event.muon_trackIso[lead] >= 0.1:
-    #     continue
-    # if event.muon_trackIso[sublead] >= 0.1:
-    #     continue
-
+        if event.muon_trackIso[lead] >= 0.1:
+            continue
+        if event.muon_trackIso[sublead] >= 0.1:
+            continue
 
     # print "* sign of charges", event.muon_q[lead]*event.muon_q[sublead]
-
 
     if event.muon_q[lead]*event.muon_q[sublead] > 0:
         continue
@@ -429,12 +542,15 @@ for i, event in enumerate(tree_mu):
     if leadjet != -1:
         btagvalue = event.jet_btagDiscriminator[leadjet]
         mvavalue = event.jet_mvaDiscriminator[leadjet]
+
     # print "muon1 min dR jet", dRmuon1jetmin, "muon2 min dR jet", dRmuon2jetmin
 
-    # if dRmuon1jetmin <= 0.3:
-    #     continue
-    # if dRmuon2jetmin <= 0.3:
-    #     continue
+    if args.dobaselineisocuts:
+
+        if dRmuon1jetmin <= 0.3:
+            continue
+        if dRmuon2jetmin <= 0.3:
+            continue
             
     motherv2D.SetXYZ(motherp.Px() , motherp.Py(), 0)
     motherv3D.SetXYZ(motherp.Px() , motherp.Py(), motherp.Pz())
@@ -457,14 +573,16 @@ for i, event in enumerate(tree_mu):
 
     # print "lxy", decaylength2Dmod, "dphi DVPV dimupt", angle1, "cos(angle1)", np.cos(angle1), "dphi muon1 muon2", mu1p.DeltaPhi(mu2p)
 
-    if decaylength2Dmod >= 11:
-        continue
-    # if np.abs(angle1) >= 0.02:
-    #     continue
-    if np.cos(angle1) <= 0:
-        continue
-    if np.abs(mu1p.DeltaPhi(mu2p)) >= 2.8:
-        continue
+    if args.dobaselinenoisocuts or args.dobaselineisocuts:
+
+        # if decaylength2Dmod >= 11:
+        #     continue
+        if np.abs(angle1) >= 0.02:
+            continue
+        # if np.cos(angle1) <= 0:
+        #     continue
+        if np.abs(mu1p.DeltaPhi(mu2p)) >= 2.8:
+            continue
 
     passexcesshits = 0
 
@@ -472,20 +590,39 @@ for i, event in enumerate(tree_mu):
         passexcesshits = 1
     elif (event.nvalidpixelhits[lead] - event.nexpectedhitsmultiple[lead]) <= 0 and (event.nvalidpixelhits[sublead] - event.nexpectedhitsmultiple[sublead]) <= 0:
         passexcesshits = 1
-        
-    if passexcesshits != 1:
-        continue
-    
+
+    if args.doextracuts:
+        if passexcesshits != 1:
+            continue
+        if distPixelmin <= 0.05:
+            continue
+        if np.log(np.abs((mu1p.Eta() - mu2p.Eta())/mu1p.DeltaPhi(mu2p))) >= 1.25:
+            continue
+
     dxysig1 = np.abs(dxy1corr/event.muon_edxy[lead])
     dxysig2 = np.abs(dxy2corr/event.muon_edxy[sublead])
     dxyscaled1 = np.abs(dxy1corr/((decaylength2Dmod*(mu1p + mu2p).M())/(mu1p + mu2p).Pt()))
     dxyscaled2 = np.abs(dxy2corr/((decaylength2Dmod*(mu1p + mu2p).M())/(mu1p + mu2p).Pt()))
+
+    if args.dodxycuts:
+
+        if dxysig1 <= 2:
+            continue
+        if dxysig2 <= 2:
+            continue
+        if dxyscaled1 <= 0.1:
+            continue
+        if dxyscaled2 <= 0.1:
+            continue
 
     # print "I have passed and am getting filled in the tree woohoo"
 
     run[0] = tree_mu.Run
     lumi[0] = tree_mu.Lumi
     event_num[0] = tree_mu.Event
+    L1[0] = passL1
+    HLT[0] = passHLT
+    signcharges[0] = event.muon_q[lead]*event.muon_q[sublead] 
     dimuon_pt[0] = ((mu1p + mu2p).Pt())
     dimuon_mass[0] = ((mu1p + mu2p).M())
     dimuon_mass_uncorr[0] = ((mu1p_uncorr + mu2p_uncorr).M())
@@ -513,8 +650,11 @@ for i, event in enumerate(tree_mu):
     muon2_phi[0] = mu2p.Phi()
     muon1_phicorr[0] = muon1_phicorrected
     muon2_phicorr[0] = muon2_phicorrected
+    muon1_ntrklayers[0] = event.ntrackerlayerswithmeasurement[lead]
+    muon2_ntrklayers[0] = event.ntrackerlayerswithmeasurement[sublead]
     muon1_excesspixelhits[0] = event.nvalidpixelhits[lead] - event.nexpectedhitsmultiple[lead]
     muon2_excesspixelhits[0] = event.nvalidpixelhits[sublead] - event.nexpectedhitsmultiple[sublead]
+    passbothexcesshits[0] = passexcesshits
     PVx[0] = event.privertex_x[0]
     PVy[0] = event.privertex_y[0]
     PVz[0] = event.privertex_z[0]
