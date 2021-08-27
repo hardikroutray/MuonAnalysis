@@ -37,7 +37,8 @@ if args.Data18:
     print "running on 2018 Data file", args.file_number
 
 ROOT.gROOT.LoadMacro("calculate_pixel.cc")
-ROOT.gROOT.LoadMacro("propagation_utils.cc")
+# ROOT.gROOT.LoadMacro("propagation_utils.cc")
+ROOT.gROOT.LoadMacro("vertexing_utils.cc")
 
 # print ROOT.point_in_which_module(0., 0., 0.)
 
@@ -54,13 +55,30 @@ ROOT.FWLiteEnabler.enable()
 # load FWlite python libraries                                                                                                       
 from DataFormats.FWLite import Handle, Events
 
-# file_mu = ROOT.TFile("/cms/scoutingmuon/hardik/condor_output/ggPhi_ntuples/ggPhi_m0p35_ct0p5_ntuple.root")                           
+##################MC INPUT#######################
+
+'''
+# file_mu = ROOT.TFile("/cms/scoutingmuon/hardik/condor_output/BPhi_ntuples/BPhi_m2_ct10_ntuple_vf.root")               
 # tree_mu = file_mu.Get('scoutingntuplizer')
-# outfile = ROOT.TFile('flat_dimuon_tree_ggPhi_mass0p35_ct0p5_newest.root', 'recreate')
+# outfile = ROOT.TFile('flat_dimuon_tree_BPhi_m2_ct10_flattree_vf2.root', 'recreate')
 # outfile.cd()
 
+file_mu = ROOT.TFile("/cms/scoutingmuon/hardik/condor_output/HZdZd_ntuples/HZdZd_m8_ct10_ntuple_vf.root")                
+tree_mu = file_mu.Get('scoutingntuplizer')
+outfile = ROOT.TFile('flat_dimuon_tree_HZdZd_m8_ct10_flattree_vf1.root', 'recreate')
+outfile.cd()
+'''
 
-path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017D_v1/200307_225553/0000/'
+####################DATA INPUT##########################
+
+# path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017C_v1/200307_225537/0000/'
+# path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017D_v1/200307_225553/0000/'
+# path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2017F_v1/200308_000417/0000/'
+
+path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2018B_v1/200308_060242/0000/' 
+# path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2018A_v1/200308_060230/0000/'
+# path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2018C_v1/200308_060301/0000/'
+# path = '/cms/routray/crab_output/muontuples_10percent_v2/ScoutingCaloMuon/ScoutingCaloMuon_Ntuples_Run2018D_v1/200308_060314/0000/'
 
 if os.path.isfile(path + '/scouting_ntuple_{}.root'.format(args.file_number)) != 1:
     print "file does not exist"
@@ -69,7 +87,7 @@ if os.path.isfile(path + '/scouting_ntuple_{}.root'.format(args.file_number)) !=
 file_mu = ROOT.TFile(path + 'scouting_ntuple_{}.root'.format(args.file_number))
 tree_mu = file_mu.Get('scoutingntuplizer')
 
-outfile = TFile("flatdimuontrees_noselections/2017/D/flatdimuontree_{}.root".format(args.file_number), "recreate")
+outfile = TFile("flatdimuontrees_noselections/2018/B/flatdimuontree_{}.root".format(args.file_number), "recreate")
 outfile.cd()
 
 print file_mu
@@ -130,7 +148,7 @@ if args.storetreepreobjsel:
 
         for j0, _ in enumerate(event0.hltbitmap):
 
-            if event0.hltbitmap[j0].first == "DST_DoubleMu1_noVtx_CaloScouting_v" and event.hltbitmap[j0].second == 1:
+            if event0.hltbitmap[j0].first == "DST_DoubleMu1_noVtx_CaloScouting_v" and event0.hltbitmap[j0].second == 1:
                 pass0DST_DoubleMu1_noVtx_CaloScouting_v = 1
 
         pass0HLT = pass0DST_DoubleMu3_noVtx_CaloScouting_v + pass0DST_DoubleMu1_noVtx_CaloScouting_v
@@ -208,6 +226,14 @@ muon1_dxysig = array("f", [0.0])
 muon2_dxysig = array("f", [0.0])
 muon1_dxyscaled = array("f", [0.0])
 muon2_dxyscaled = array("f", [0.0])
+reDVx = array("f", [0.0])
+reDVy = array("f", [0.0])
+reDVz = array("f", [0.0])
+reDCA = array("f", [0.0])
+if args.MC17 or args.MC18:
+    genDVx = array("f", [0.0])
+    genDVy = array("f", [0.0])
+    genDVz = array("f", [0.0])
 
 #tree.Branch('muon1_pt', muon1_pt, 'muon1_pt/F')
 tree.Branch('run', run, 'run/F')
@@ -275,6 +301,13 @@ tree.Branch('muon1_dxysig', muon1_dxysig, 'muon1_dxysig/F')
 tree.Branch('muon2_dxysig', muon2_dxysig, 'muon2_dxysig/F')
 tree.Branch('muon1_dxyscaled', muon1_dxyscaled, 'muon1_dxyscaled/F')
 tree.Branch('muon2_dxyscaled', muon2_dxyscaled, 'muon2_dxyscaled/F')
+tree.Branch('reDVx', reDVx, 'reDVx/F')
+tree.Branch('reDVy', reDVy, 'reDVy/F')
+tree.Branch('reDVz', reDVz, 'reDVz/F')
+tree.Branch('reDCA', reDCA, 'reDCA/F')
+tree.Branch('genDVx', genDVx, 'genDVx/F')
+tree.Branch('genDVy', genDVy, 'genDVy/F')
+tree.Branch('genDVz', genDVz, 'genDVz/F')
 
 #DeltaRmumu = ROOT.TH1F("DeltaRmumu", "DeltaRmumu", 100, -10, 10)
 #muchi2overndof = ROOT.TH1F("muchi2overndof", "muchi2overndof", 100, -10, 10)
@@ -284,6 +317,7 @@ tree.Branch('muon2_dxyscaled', muon2_dxyscaled, 'muon2_dxyscaled/F')
 #nvalidstriphits = ROOT.TH1F("nvalidstriphits", "nvalidstriphits", 100, -10, 10)
 
 numberofevents = 0
+totnphi1 = 0
 
 for i, event in enumerate(tree_mu):
 
@@ -421,7 +455,6 @@ for i, event in enumerate(tree_mu):
     sublead = -1
     lead = -1
 
-
     for index in range(len(event.vertex_index)):
         for subindex in event.vertex_index[index]:
                 
@@ -513,6 +546,38 @@ for i, event in enumerate(tree_mu):
     muon2_phicorrected = ROOT.recalculate_phi_at_DV(muon2_PCA[0], muon2_PCA[1], muon2_PCA[2], mu2p_uncorr.Px(), mu2p_uncorr.Py(), mu2p_uncorr.Pz(), event.muon_q[sublead], event.dispvertex_x[bestdv], event.dispvertex_y[bestdv] )
     # print "muon2 PCA", muon2_PCA[0], muon2_PCA[1], muon2_PCA[2], "muon2_phicorr", muon2_phicorrected
 
+
+    if args.MC17 or args.MC18:
+
+        nphi = 0
+        for gen in range(len(event.gid)):
+        
+            if event.gid[gen] == 13: 
+                nphi+= 1
+
+        if nphi == 1:
+            totnphi1+=1
+
+        # print "No. of phis", nphi
+
+        if nphi != 1:
+            continue
+
+
+    reDV =  ROOT.recalculate_DV(muon1_PCA[0], muon1_PCA[1], muon1_PCA[2], muon2_PCA[0], muon2_PCA[1], muon2_PCA[2], mu1p_uncorr.Px(), mu1p_uncorr.Py(), mu1p_uncorr.Pz(), mu2p_uncorr.Px(), mu2p_uncorr.Py(), mu2p_uncorr.Pz(), event.muon_q[lead], event.muon_q[sublead])
+
+    print "scouting: DVx ", event.dispvertex_x[bestdv], " DVy ", event.dispvertex_y[bestdv], " DVz ", event.dispvertex_z[bestdv] 
+    print "recalculated: DVx ", reDV[0], " DVy ", reDV[1], " DVz ", reDV[2], " reDCA ", reDV[3]
+    if args.MC17 or args.MC18:
+        for gen in range(len(event.gid)):
+            # if event.gid[gen] == 13 and event.mothergid[gen] == 6000211:
+            #     print "generated: DVx ", event.gendispvertex[gen][0], " DVy ", event.gendispvertex[gen][1], " DVz ", event.gendispvertex[gen][2] 
+            if event.gid[gen] == 13:
+                genDV = [event.gendispvertex[gen][0], event.gendispvertex[gen][1], event.gendispvertex[gen][2]]
+                print "generated: DVx ", event.gendispvertex[gen][0], " DVy ", event.gendispvertex[gen][1], " DVz ", event.gendispvertex[gen][2] 
+
+    print "      "
+
     mu1p.SetPtEtaPhiM(event.muon_pt[lead], event.muon_eta[lead], muon1_phicorrected, 0.1056583745)
     mu2p.SetPtEtaPhiM(event.muon_pt[sublead], event.muon_eta[sublead], muon2_phicorrected, 0.1056583745)
     motherp = mu1p + mu2p
@@ -532,7 +597,7 @@ for i, event in enumerate(tree_mu):
         if mu1p.DeltaR(jetp) < dRmuon1jetmin: 
             dRmuon1jetmin = mu1p.DeltaR(jetp)
 
-        if mu2p.DeltaR(jetp) < dRmuon1jetmin:
+        if mu2p.DeltaR(jetp) < dRmuon2jetmin:
             dRmuon2jetmin = mu2p.DeltaR(jetp)
 
         if event.jet_pt[jet] > highestjetpt:
@@ -615,6 +680,7 @@ for i, event in enumerate(tree_mu):
         if dxyscaled2 <= 0.1:
             continue
 
+
     # print "I have passed and am getting filled in the tree woohoo"
 
     run[0] = tree_mu.Run
@@ -681,10 +747,20 @@ for i, event in enumerate(tree_mu):
     muon2_dxysig[0] = dxysig2
     muon1_dxyscaled[0] = dxyscaled1
     muon2_dxyscaled[0] = dxyscaled2
+    reDVx[0] = reDV[0]
+    reDVy[0] = reDV[1]
+    reDVz[0] = reDV[2]
+    reDCA[0] = reDV[3]
+    if args.MC17 or args.MC18:
+        genDVx[0] = genDV[0]
+        genDVy[0] = genDV[1]
+        genDVz[0] = genDV[2]
 
     tree.Fill()
 
 print "number of events in the file", numberofevents
+print "total number of events with nnPhi == 1", totnphi1
+
 
 #DeltaRmumu.Write()
 #muchi2overndof.Write()
